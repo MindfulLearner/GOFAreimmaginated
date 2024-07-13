@@ -25,6 +25,19 @@ IF STATEMENT GANG
 - IL GIOCO E A TURNI QUINDI PRIMA ESEGUO I MIEI COMANDI DOPO CHE IO HO ESEGUITO I MIEI COMANDI 
 ### ho domande a riguardo difficolta ??
 
+# PT3 FIGHT RANDOM
+- Il per ora si svolgera solo a un tipo di nave ovvero i caccia quindi si calcolera per ora la probagbilita per quanto riguarda il loro numero quindi piu sono e piu probabile si vince.
+
+- POI SI METTERANNO stile carta forbioce e sasso come detto in readme.md 
+ma piu avanti epico
+
+
+
+
+
+
+
+
 
 
 
