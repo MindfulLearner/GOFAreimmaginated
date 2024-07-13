@@ -14,7 +14,19 @@ typedef struct {
 
 
 void moveNaviGiocatore (){
-	//SPOSTIAMO INT DI struct giocatore a struct pianeta 
+	//SPOSTIAMO INT DI struct giocatore a struct pianeta
+
+
+	print ( inserire quante navi da mandare)
+		scanf (utente inseriesce quante navi mandare)
+
+		if naviInProduzionpuntatore ovviamente = 0 or minore di richiesta dellutent)
+		{
+		 prendiamo da struct, spostiamo da struct giocatore i dati di int caccia giocare a pianeti	
+		} else {
+printf (non ci sono abbastanza navi da mandare)''
+	return errore 
+		}
 	CacciaGIocatore.GIocatore = > CacciaGiocatore.Giocatore 
 
 }
@@ -25,10 +37,12 @@ void produciNaviGiocatore () {
 	prinft( inserisci quante navi vuoi produre)
 		scanf (metti numero da navi da produrre)
 		int naviInProduzion = naviInProduzion + scanf inserito sicuramente un int ) 
-	int naviPronte; 
+		int naviPronte; 
 	printf (testo che chiede di scegli quante navi vuoi printare)
 		scanf (inseriamo quante navi vogliamo mettere )
-		int navipronto = navipronte + naviPronte 
+		int navipronto = navipronte + naviInProduzion 
+
+		// grande problema ovvero che rimane buffer dobbiamo spostare idati a struct giocatore e poi passarte clearre il buffer di questi cosi non azzeriamo il contatore per le voci di producinavi
 
 }
 
