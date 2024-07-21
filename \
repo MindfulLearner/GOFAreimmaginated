@@ -39,15 +39,17 @@ char* richiestaComandi() {
     bool booleanoComandi = true;
     static char comando[50];
     while (booleanoComandi) {
-        printf("Inseriesci dei comandi, scrivi help se vuoi vedere la lista dei comandi: ");
+        printf("Inseriesci dei comandi, scrivi help se vuoi vedere la lista dei comandi");
         scanf("%49s", comando);
         for (int i = 0; i < sizeof(arrayComando)/sizeof(arrayComando[0]); i++) {
             if (strcmp(comando, arrayComando[i]) == 0){
-                return comando;
+                printf("entrato in while for e %d", i);
+                break;
             }
         }
-        printf("Comando Errato riprova\n");
+        booleanoComandi = false; 
     }
+    return comando;
 }
 
 // inizio programma
