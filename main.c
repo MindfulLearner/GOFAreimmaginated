@@ -50,6 +50,19 @@ char* richiestaComandi() {
     }
 }
 
+void risposteComandi(const char* inputUtente) {
+    if (strcmp(inputUtente, arrayComando[0]) == 0) {
+        printf("I comandi che hai a disposizione sono:\n");
+        printf("tutorial\n");
+        printf("produciNavi\n");
+        printf("mandaNavi\n");
+    } else if (strcmp(inputUtente, arrayComando[1]) == 0) {
+        printf("PRODUCINAVISWAG\n");
+    } else if (strcmp(inputUtente, arrayComando[2]) == 0) {
+        printf("MANDANAVI\n");
+    }
+}
+
 // inizio programma
 int main () {
     // configurazione init a 0 di struct Giocatori
@@ -58,10 +71,34 @@ int main () {
     // ------------------------------------PROMPTS COMMANDI GIOCO -----------------------------------
     // ----------------------------------------------------------------------------------------------
 
-    char *inputUtente = richiestaComandi(); 
-    printf("%s\n", inputUtente);
+
+    while (true) { 
+        char *inputUtente = richiestaComandi(); 
+        printf("%s\n", inputUtente);
+        risposteComandi(inputUtente);
+    }
+
+
+
 
 
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
