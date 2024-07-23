@@ -25,14 +25,13 @@
 // void giocatoreMoveNavi (){
 // }
 // 
-// void giocatoreProduciNavi () {
-// 	// richiesta di produzione navi si controll si parte dal presssuposto che verra usata questa richiest 	
-// }
+
 
 const char *arrayComando[] = {
-    "help",
-    "produciNavi",
-    "mandaNavi"
+    "HELP",
+    "PRODUCINAVI",
+    "MANDANAVI",
+    "EXIT"
 }; 
 
 char* richiestaComandi() {
@@ -46,42 +45,14 @@ char* richiestaComandi() {
                 return comando;
             }
         }
-        printf("Comando Errato riprova\n");
-    }
-}
-
-void risposteComandi(const char* inputUtente) {
-    if (strcmp(inputUtente, arrayComando[0]) == 0) {
-        printf("I comandi che hai a disposizione sono:\n");
-        printf("tutorial\n");
-        printf("produciNavi\n");
-        printf("mandaNavi\n");
-    } else if (strcmp(inputUtente, arrayComando[1]) == 0) {
-        printf("PRODUCINAVISWAG\n");
-    } else if (strcmp(inputUtente, arrayComando[2]) == 0) {
-        printf("MANDANAVI\n");
-    }
-}
-
-// inizio programma
-int main () {
-    // configurazione init a 0 di struct Giocatori
-    // configuro la prompt comandi 
+S COMMANDI GIOCO -----------------------------------
     // ----------------------------------------------------------------------------------------------
-    // ------------------------------------PROMPTS COMMANDI GIOCO -----------------------------------
-    // ----------------------------------------------------------------------------------------------
-
 
     while (true) { 
         char *inputUtente = richiestaComandi(); 
         printf("%s\n", inputUtente);
         risposteComandi(inputUtente);
     }
-
-
-
-
-
 
     return 0;
 }
