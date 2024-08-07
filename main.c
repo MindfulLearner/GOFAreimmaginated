@@ -1,4 +1,4 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include <stdlib.h> 
 #include <time.h>
 #include <stdbool.h>
@@ -12,33 +12,59 @@ typedef struct {
 } pianeta;
 
 
-
-
-// STRUTTURA PLAYER
+// STRUTTURA PLAYER RESET ANCHE PIANETA
 giocatore player = {0};
-
-
+// STRUTTURA PIANETA SESET
+pianeta pianetaA = {0};
 
 // BOOL
 bool whileComandi = true;
 
+const char *pianetiList[] = {
+    "PIANETA-A",
+    "PIANETA-B",
+}; 
 
-
+//mandaNavi funzioner
+// AGGIUNGERE IF DI CONTROLLO SE PRESENTI SE POSSIBILE 
+void mandaNavi(giocatore *player, pianeta *pianetaA){
+    int naviDaMandare;
+    static char nomeDelPianeta[50];
+    printf("Quanti navi vuoi mandare?\n");
+    scanf("%d", &naviDaMandare);
+    printf("In che pianeta vuoi mandarli?\n");
+    printf("Puoi inviarli in:\n");
+    printf("PIANETA-A\n");
+    printf("PIANETA-B\n");
+    scanf("%49s", &nomeDelPianeta);
+    // comparazione nome pianeta e pianeti list
+    if (strcmp(nomeDelPianeta, pianetiList[0]) == 0){
+        // meno a player + a pianeta selezionato
+        // CONTROLLO NAVI FUNZIONANATE
+        if (player->cacciaPlayer > naviDaMandare) {
+            player->cacciaPlayer -= naviDaMandare;
+            pianetaA -> cacciaPlayer += naviDaMandare; 
+        } else {
+            printf("non hai abbastanza navi da mandare\n");
+        }
+    }
+};
 
 // produci navi da mettere poi limite
-void produciNavi(giocatore *giocatore) {
+void produciNavi(giocatore *player) {
     int nuoveNavi;
     printf("Quanti navi vuoi produrre?\n");
     scanf("%d", &nuoveNavi);
-    giocatore->cacciaPlayer += nuoveNavi;
-}
+    player->cacciaPlayer += nuoveNavi;
+};
+
 
 const char *arrayComando[] = {
     "HELP",
     "PRODUCINAVI",
     "MANDANAVI",
     "EXIT",
-        "USCITATOTALE"
+    "USCITATOTALE"
 }; 
 
 char* bufferComandi() {
@@ -56,6 +82,7 @@ char* bufferComandi() {
     }
 }
 
+// comandi di richiesta 
 bool risposteComandi(const char* inputUtente) {
     if (strcmp(inputUtente, arrayComando[0]) == 0) {
         printf("-------------------------------------------\n");
@@ -67,6 +94,7 @@ bool risposteComandi(const char* inputUtente) {
         printf("'USCITATOTALE' per uscire totalemente\n");
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[1]) == 0) {
+        // produci navi 
         printf("-------------------------------------------\n");
         printf("PRODUCINAVISWAG\n");
         produciNavi(&player);
@@ -74,12 +102,13 @@ bool risposteComandi(const char* inputUtente) {
     } else if (strcmp(inputUtente, arrayComando[2]) == 0) {
         printf("-------------------------------------------\n");
         printf("MANDANAVI\n");
+        mandaNavi(&player, &pianetaA);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[3]) == 0) {
         printf("RITORNO A MAIN\n");
         return whileComandi = false;
     }
-     else if (strcmp(inputUtente, arrayComando[4]) == 0) {
+    else if (strcmp(inputUtente, arrayComando[4]) == 0) {
         printf("FINE PROGRAMMA..");
         exit(1);
     }
@@ -95,12 +124,13 @@ int main () {
     // ----------------------------------------------------------------------------------------------
     // ------------------------------------PROMPTS COMMANDI GIOCO -----------------------------------
     // ----------------------------------------------------------------------------------------------
-    
+
     while (whileComandi == true) { 
         char *inputUtente = bufferComandi(); 
         risposteComandi(inputUtente);
     }
     printf("Totalenavi: %d\n", player.cacciaPlayer);
+    printf("Totale navi in pianeta a : %d\n", pianetaA.cacciaPlayer);
     return 0;
 }
 

@@ -1,4 +1,4 @@
-# GOFAreimagined
+ GOFAreimagined
 
 ## Informazioni utili
 GOFA era uno dei miei giochi preferiti in assoluto. Era perfetto e ci ho speso dei soldi quando ero piccolo, e avevo un gruppo di amici inglesi con cui gicoavo e coordinavamo gli attacchi insieme.
