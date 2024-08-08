@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
+#include <pthread.h>
 
 typedef struct {
     int cacciaPlayer;
@@ -38,13 +39,26 @@ const char *arrayComando[] = {
     "USCITATOTALE"
 }; 
 
-void computerAction() {
-    for (int timer = 5; timer > 0; timer--) {
-        sleep(1);
-        printf("%d\n", timer);
-    }
-printf("ciao chiuso computer\n");
+void mandaNaviComputer(){
+    srand(time(NULL));
+    int randomInvio = (rand() % 10) + 1;
+    printf("random: %d\n", randomInvio);
 }
+
+volatile bool timerBool = true;
+// funziona nache senza argomento void pointer
+void* computerAction(void* arg) {
+    while (timerBool) {
+        for (int timer = 5; timer > 0; timer--) {
+            sleep(1);
+            printf("%d\n", timer);
+        }
+            mandaNaviComputer();
+    }
+    printf("ciao chiuso computer\n");
+    return NULL;
+}
+
 
 //mandaNavi funzioner
 // AGGIUNGERE IF DI CONTROLLO SE PRESENTI SE POSSIBILE 
@@ -71,7 +85,6 @@ void mandaNavi(giocatore *player, pianeta *pianetaA){
     }
 };
 
-
 // produci navi da mettere poi limite
 void produciNavi(giocatore *player) {
     int nuoveNavi;
@@ -84,7 +97,7 @@ char* bufferComandi() {
     bool booleanoComandi = true;
     static char comando[50];
     while (booleanoComandi) {
-        printf("Inseriesci dei comandi, scrivi help se vuoi vedere la lista dei comandi: ");
+        printf("Inseriesci dei comandi, scrivi help se vuoi vedere la lista dei comandi: \n");
         scanf("%49s", comando);
         for (int i = 0; i < sizeof(arrayComando)/sizeof(arrayComando[0]); i++) {
             if (strcmp(comando, arrayComando[i]) == 0){
@@ -131,14 +144,20 @@ bool risposteComandi(const char* inputUtente) {
 // inizio programma
 int main () {
 
+    pthread_t timerMandareNavi; 
+
+    printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
+    pthread_create(&timerMandareNavi, NULL, computerAction, NULL);
+
+    printf("thread partito\n");
+
+
     // configurazione init a 0 di struct Giocatori
     // configuro la prompt comandi 
     // ----------------------------------------------------------------------------------------------
     // ------------------------------------PROMPTS COMMANDI GIOCO -----------------------------------
     // ----------------------------------------------------------------------------------------------
 
-    printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
-    computerAction();
 
     while (whileComandi == true) { 
         char *inputUtente = bufferComandi(); 
@@ -146,12 +165,14 @@ int main () {
     }
     printf("Totalenavi: %d\n", player.cacciaPlayer);
     printf("Totale navi in pianeta a : %d\n", pianetaA.cacciaPlayer);
+//funziona anche senza questa pthreadexit Clean clode
+    pthread_exit(NULL);
     return 0;
 }
 
 
 
-
+// m
 
 
 
