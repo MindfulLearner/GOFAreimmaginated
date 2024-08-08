@@ -3,12 +3,17 @@
 #include <time.h>
 #include <stdbool.h>
 #include <string.h>
+#include <unistd.h>
 
 typedef struct {
     int cacciaPlayer;
 } giocatore;
 typedef struct {
+    int cacciaComputer;
+} computer;
+typedef struct {
     int cacciaPlayer;
+    int cacciaComputer;
 } pianeta;
 
 
@@ -24,6 +29,22 @@ const char *pianetiList[] = {
     "PIANETA-A",
     "PIANETA-B",
 }; 
+
+const char *arrayComando[] = {
+    "HELP",
+    "PRODUCINAVI",
+    "MANDANAVI",
+    "EXIT",
+    "USCITATOTALE"
+}; 
+
+void computerAction() {
+    for (int timer = 5; timer > 0; timer--) {
+        sleep(1);
+        printf("%d\n", timer);
+    }
+printf("ciao chiuso computer\n");
+}
 
 //mandaNavi funzioner
 // AGGIUNGERE IF DI CONTROLLO SE PRESENTI SE POSSIBILE 
@@ -50,6 +71,7 @@ void mandaNavi(giocatore *player, pianeta *pianetaA){
     }
 };
 
+
 // produci navi da mettere poi limite
 void produciNavi(giocatore *player) {
     int nuoveNavi;
@@ -57,15 +79,6 @@ void produciNavi(giocatore *player) {
     scanf("%d", &nuoveNavi);
     player->cacciaPlayer += nuoveNavi;
 };
-
-
-const char *arrayComando[] = {
-    "HELP",
-    "PRODUCINAVI",
-    "MANDANAVI",
-    "EXIT",
-    "USCITATOTALE"
-}; 
 
 char* bufferComandi() {
     bool booleanoComandi = true;
@@ -118,12 +131,14 @@ bool risposteComandi(const char* inputUtente) {
 // inizio programma
 int main () {
 
-
     // configurazione init a 0 di struct Giocatori
     // configuro la prompt comandi 
     // ----------------------------------------------------------------------------------------------
     // ------------------------------------PROMPTS COMMANDI GIOCO -----------------------------------
     // ----------------------------------------------------------------------------------------------
+
+    printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
+    computerAction();
 
     while (whileComandi == true) { 
         char *inputUtente = bufferComandi(); 
