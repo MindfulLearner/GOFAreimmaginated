@@ -35,10 +35,32 @@ const char *arrayComando[] = {
     "HELP",
     "PRODUCINAVI",
     "MANDANAVI",
+    "DIFFICOLTA",
     "EXIT",
     "USCITATOTALE"
 }; 
 
+const char *sceltaDifficolta[] = {
+    "EASY",
+    "MEDIUM",
+    "HARD"
+};
+// DIFFICOLTA EASY IN DEFAULT>?a
+static char difficolta[10] = "EASY";
+
+void modificaDifficolta() {
+    printf("selezioan una difficolta:\n");
+    printf("EASY\n");
+    printf("MEDIUM\n");
+    printf("HARD\n");
+    static char contenitoreScanf[10];
+    scanf("%10s", &contenitoreScanf);
+    // si usa stcpy libreria che copia altrimenti bisogna fare tutto un calcolo di array per copiare qualcosa
+    strcpy(difficolta, contenitoreScanf);
+    printf("DIFFICOLTA SELEZIONATA: %s\n", difficolta);
+}
+
+// in base alla difficolta, verranno cambiati i praramentri di mandaNAviComputer
 void mandaNaviComputer(){
     srand(time(NULL));
     int randomInvio = (rand() % 10) + 1;
@@ -53,7 +75,7 @@ void* computerAction(void* arg) {
             sleep(1);
             printf("%d\n", timer);
         }
-            mandaNaviComputer();
+        mandaNaviComputer();
     }
     printf("ciao chiuso computer\n");
     return NULL;
@@ -116,6 +138,7 @@ bool risposteComandi(const char* inputUtente) {
         printf("'TUTORIAL' per vedere le istruzioni di gioco e come gicoare\n");
         printf("'PRODUCINAVI' per produrre navi\n");
         printf("'MANDANAVI' per mandare le navi ai pianeti\n");
+        printf("'DIFFICOLTA' seleziona difficolta di gioco\n");
         printf("'EXIT' per andare in Lobby Main\n");
         printf("'USCITATOTALE' per uscire totalemente\n");
         printf("-------------------------------------------\n");
@@ -131,10 +154,14 @@ bool risposteComandi(const char* inputUtente) {
         mandaNavi(&player, &pianetaA);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[3]) == 0) {
+        printf("-------------------------------------------\n");
+        printf("SCELTA DIFFICOLTA\n");
+        modificaDifficolta();
+        printf("-------------------------------------------\n");
+    } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
         printf("RITORNO A MAIN\n");
         return whileComandi = false;
-    }
-    else if (strcmp(inputUtente, arrayComando[4]) == 0) {
+    } else if (strcmp(inputUtente, arrayComando[5]) == 0) {
         printf("FINE PROGRAMMA..");
         exit(1);
     }
@@ -165,7 +192,7 @@ int main () {
     }
     printf("Totalenavi: %d\n", player.cacciaPlayer);
     printf("Totale navi in pianeta a : %d\n", pianetaA.cacciaPlayer);
-//funziona anche senza questa pthreadexit Clean clode
+    //funziona anche senza questa pthreadexit Clean clode
     pthread_exit(NULL);
     return 0;
 }
