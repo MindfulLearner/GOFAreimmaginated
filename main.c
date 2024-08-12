@@ -67,16 +67,17 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot) {
     printf("DIFFICOLTA SELEZIONATA: %s\n", difficolta);
 
 
-
     if (strcmp(difficolta, sceltaDifficolta[0]) == 0){
 
         printf("HAI SELEZIONATO EASY\n");
+ secondiDiReazione = 10;
+ numeroDiNaviInviati = 8;
         printf("Adesso computer inviera %d navi ogni %d secondi, ", *invieraNavi, *secondiTot);
         printf("HAI SELEZIONATO EASY\n");
 
     } else if (strcmp(difficolta, sceltaDifficolta[1]) == 0){
-
         printf("HAI SELEZIONATO MEDIUM\n");
+        printf("Adesso computer inviera %d navi ogni %d secondi, ", *invieraNavi, *secondiTot);
 
         //piu leggibile con else if altrimenti con solo else non cambierebbe
     } else if (strcmp(difficolta, sceltaDifficolta[2]) == 0){
@@ -91,7 +92,6 @@ void mandaNaviComputer(int* invioCacciaComputer){
     int randomInvioCaccia = (rand() % (*invioCacciaComputer)) + 1;
     printf("random: %d\n", randomInvioCaccia);
 }
-
 
 
 volatile bool timerBool = true;
