@@ -147,7 +147,7 @@ char* bufferComandi() {
     bool booleanoComandi = true;
     static char comando[50];
     while (booleanoComandi) {
-        printf("Inseriesci dei comandi, scrivi help se vuoi vedere la lista dei comandi: \n");
+        printf("Inseriesci dei comandi, scrivi HELP se vuoi vedere la lista dei comandi: \n");
         scanf("%49s", comando);
         for (int i = 0; i < sizeof(arrayComando)/sizeof(arrayComando[0]); i++) {
             if (strcmp(comando, arrayComando[i]) == 0){
