@@ -45,10 +45,17 @@ const char *sceltaDifficolta[] = {
     "MEDIUM",
     "HARD"
 };
+
+//Parametri di difficolta DEFAULT EASy, non si puo mettere in una data structure in cui praticamente viene richiamato solo quello
+//e modifica i parametri da li
+int secondiDiReazione = 10;
+int numeroDiNaviInviati = 8;
+
+
 // DIFFICOLTA EASY IN DEFAULT>?a
 static char difficolta[10] = "EASY";
 
-void modificaDifficolta() {
+void modificaDifficolta(int* invieraNavi, int* secondiTot) {
     printf("selezioan una difficolta:\n");
     printf("EASY\n");
     printf("MEDIUM\n");
@@ -58,24 +65,45 @@ void modificaDifficolta() {
     // si usa stcpy libreria che copia altrimenti bisogna fare tutto un calcolo di array per copiare qualcosa
     strcpy(difficolta, contenitoreScanf);
     printf("DIFFICOLTA SELEZIONATA: %s\n", difficolta);
+
+
+
+    if (strcmp(difficolta, sceltaDifficolta[0]) == 0){
+
+        printf("HAI SELEZIONATO EASY\n");
+        printf("Adesso computer inviera %d navi ogni %d secondi, ", *invieraNavi, *secondiTot);
+        printf("HAI SELEZIONATO EASY\n");
+
+    } else if (strcmp(difficolta, sceltaDifficolta[1]) == 0){
+
+        printf("HAI SELEZIONATO MEDIUM\n");
+
+        //piu leggibile con else if altrimenti con solo else non cambierebbe
+    } else if (strcmp(difficolta, sceltaDifficolta[2]) == 0){
+
+        printf("HAI SELEZIONATO HARD\n");
+    }
 }
 
 // in base alla difficolta, verranno cambiati i praramentri di mandaNAviComputer
-void mandaNaviComputer(){
+void mandaNaviComputer(int* invioCacciaComputer){
     srand(time(NULL));
-    int randomInvio = (rand() % 10) + 1;
-    printf("random: %d\n", randomInvio);
+    int randomInvioCaccia = (rand() % (*invioCacciaComputer)) + 1;
+    printf("random: %d\n", randomInvioCaccia);
 }
+
+
 
 volatile bool timerBool = true;
 // funziona nache senza argomento void pointer
 void* computerAction(void* arg) {
+    int* secondiDiReazione = (int*)arg; // castiamo puntatore void inint
     while (timerBool) {
-        for (int timer = 5; timer > 0; timer--) {
+        for (int timer = *secondiDiReazione; timer > 0; timer--) {
             sleep(1);
             printf("%d\n", timer);
         }
-        mandaNaviComputer();
+        mandaNaviComputer(&numeroDiNaviInviati);
     }
     printf("ciao chiuso computer\n");
     return NULL;
@@ -156,7 +184,7 @@ bool risposteComandi(const char* inputUtente) {
     } else if (strcmp(inputUtente, arrayComando[3]) == 0) {
         printf("-------------------------------------------\n");
         printf("SCELTA DIFFICOLTA\n");
-        modificaDifficolta();
+        modificaDifficolta(&secondiDiReazione, &numeroDiNaviInviati);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
         printf("RITORNO A MAIN\n");
@@ -171,10 +199,20 @@ bool risposteComandi(const char* inputUtente) {
 // inizio programma
 int main () {
 
+    static char startCommand[10];
+    printf("scrivi START per cominciare\n");
+    scanf("%10s", &startCommand);
+    if (strcmp(startCommand, "START") == 0) {
+        printf("Partita cominciata\n");
+    } else {
+        printf("NO\n");
+        return 0;
+    }
+
     pthread_t timerMandareNavi; 
 
     printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
-    pthread_create(&timerMandareNavi, NULL, computerAction, NULL);
+    pthread_create(&timerMandareNavi, NULL, computerAction, &secondiDiReazione);
 
     printf("thread partito\n");
 
