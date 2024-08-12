@@ -48,14 +48,15 @@ const char *sceltaDifficolta[] = {
 
 //Parametri di difficolta DEFAULT EASy, non si puo mettere in una data structure in cui praticamente viene richiamato solo quello
 //e modifica i parametri da li
-int secondiDiReazione = 10;
 int numeroDiNaviInviati = 8;
+int secondiDiReazione = 10;
+int possibilitaDiSuccessoTrasferimentoComputerNavi = 6;
 
 
 // DIFFICOLTA EASY IN DEFAULT>?a
 static char difficolta[10] = "EASY";
 
-void modificaDifficolta(int* invieraNavi, int* secondiTot) {
+void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuccesso) {
     printf("selezioan una difficolta:\n");
     printf("EASY\n");
     printf("MEDIUM\n");
@@ -68,21 +69,28 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot) {
 
 
     if (strcmp(difficolta, sceltaDifficolta[0]) == 0){
-
         printf("HAI SELEZIONATO EASY\n");
- secondiDiReazione = 10;
- numeroDiNaviInviati = 8;
-        printf("Adesso computer inviera %d navi ogni %d secondi, ", *invieraNavi, *secondiTot);
+        numeroDiNaviInviati = 8;
+        secondiDiReazione = 10;
+        possibilitaDiSuccessoTrasferimentoComputerNavi = 6;
+        printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
         printf("HAI SELEZIONATO EASY\n");
 
     } else if (strcmp(difficolta, sceltaDifficolta[1]) == 0){
         printf("HAI SELEZIONATO MEDIUM\n");
-        printf("Adesso computer inviera %d navi ogni %d secondi, ", *invieraNavi, *secondiTot);
+        numeroDiNaviInviati = 15;
+        secondiDiReazione = 6;
+        possibilitaDiSuccessoTrasferimentoComputerNavi = 7;
+        printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
 
         //piu leggibile con else if altrimenti con solo else non cambierebbe
     } else if (strcmp(difficolta, sceltaDifficolta[2]) == 0){
-
         printf("HAI SELEZIONATO HARD\n");
+        numeroDiNaviInviati = 30;
+        secondiDiReazione = 3;
+        possibilitaDiSuccessoTrasferimentoComputerNavi = 9;
+        printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
+
     }
 }
 
@@ -91,6 +99,14 @@ void mandaNaviComputer(int* invioCacciaComputer){
     srand(time(NULL));
     int randomInvioCaccia = (rand() % (*invioCacciaComputer)) + 1;
     printf("random: %d\n", randomInvioCaccia);
+    // ora probabilita che vengano mandati le navi 
+    srand(time(NULL)); 
+    int randomSuccessNumb = (rand() % 10) + 1; 
+    if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
+        printf("%d <= %d\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+    } else {
+        printf("%d > %d\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+    }
 }
 
 
@@ -101,7 +117,7 @@ void* computerAction(void* arg) {
     while (timerBool) {
         for (int timer = *secondiDiReazione; timer > 0; timer--) {
             sleep(1);
-            printf("%d\n", timer);
+            //printf("%d\n", timer);
         }
         mandaNaviComputer(&numeroDiNaviInviati);
     }
@@ -184,7 +200,7 @@ bool risposteComandi(const char* inputUtente) {
     } else if (strcmp(inputUtente, arrayComando[3]) == 0) {
         printf("-------------------------------------------\n");
         printf("SCELTA DIFFICOLTA\n");
-        modificaDifficolta(&secondiDiReazione, &numeroDiNaviInviati);
+        modificaDifficolta(&numeroDiNaviInviati, &secondiDiReazione, &possibilitaDiSuccessoTrasferimentoComputerNavi);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
         printf("RITORNO A MAIN\n");
