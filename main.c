@@ -20,6 +20,8 @@ typedef struct {
 
 // STRUTTURA PLAYER RESET ANCHE PIANETA
 giocatore player = {0};
+// STRUTTURA COMPUTER NPC RESET 
+computer VaaxNpc = {0};
 // STRUTTURA PIANETA SESET
 pianeta pianetaA = {0};
 
@@ -95,7 +97,7 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuc
 }
 
 // in base alla difficolta, verranno cambiati i praramentri di mandaNAviComputer
-void mandaNaviComputer(int* invioCacciaComputer){
+void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pianetaA){
     srand(time(NULL));
     int randomInvioCaccia = (rand() % (*invioCacciaComputer)) + 1;
     printf("random: %d\n", randomInvioCaccia);
@@ -103,9 +105,13 @@ void mandaNaviComputer(int* invioCacciaComputer){
     srand(time(NULL)); 
     int randomSuccessNumb = (rand() % 10) + 1; 
     if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
-        printf("%d <= %d\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        vaaxNpc->cacciaComputer = randomInvioCaccia;
+        pianetaA->cacciaComputer = randomInvioCaccia;
+        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer - pianetaA->cacciaComputer;
+
     } else {
-        printf("%d > %d\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
     }
 }
 
@@ -119,7 +125,7 @@ void* computerAction(void* arg) {
             sleep(1);
             //printf("%d\n", timer);
         }
-        mandaNaviComputer(&numeroDiNaviInviati);
+        mandaNaviComputer(&numeroDiNaviInviati, &VaaxNpc, &pianetaA);
     }
     printf("ciao chiuso computer\n");
     return NULL;
@@ -225,7 +231,9 @@ int main () {
         return 0;
     }
 
+
     pthread_t timerMandareNavi; 
+
 
     printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
     pthread_create(&timerMandareNavi, NULL, computerAction, &secondiDiReazione);
@@ -244,8 +252,12 @@ int main () {
         char *inputUtente = bufferComandi(); 
         risposteComandi(inputUtente);
     }
-    printf("Totalenavi: %d\n", player.cacciaPlayer);
-    printf("Totale navi in pianeta a : %d\n", pianetaA.cacciaPlayer);
+    printf("Totalenavi player: %d\n", player.cacciaPlayer);
+    printf("Totale navi player in pianeta a : %d\n", pianetaA.cacciaPlayer);
+    ///
+    printf("#################separatore####################\n");
+    printf("Totalenavi computer: %d\n", VaaxNpc.cacciaComputer);
+    printf("Totale navi del computer in pianeta a : %d\n", pianetaA.cacciaComputer);
     //funziona anche senza questa pthreadexit Clean clode
     pthread_exit(NULL);
     return 0;
