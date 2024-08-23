@@ -140,7 +140,13 @@ void* computerAction(void* arg) {
 
 void* battagliaInTotTempo(void* arg) {
     printf("entrato in battaglia tempo tot\n");
-    return 0;
+    while (timerBool) {
+        for (int timer = 4; timer > 0; timer --) {
+            sleep(1);
+        }
+        printf("battaglia in corso..\n");
+    }
+    pthread_exit(NULL);
 }
 
 
@@ -169,11 +175,45 @@ void mandaNavi(giocatore *player, pianeta *pianetaA){
     }
 };
 
+void stampaTipologieDiNavi() {
+    printf("----------------------TIPOLOGIA NAVI-------------------------------\n");
+    printf("'CACCIA' navi che counterano i BOMBARDIERI\n");
+    printf("'INTERCETTATORE' navi che counterano i CACCIA\n");
+    printf("'BOMBARIERE' navi che counterano gli INTERCETTATORI\n");
+    printf("'ESCI' per uscire dal comnado mandaNavi\n");
+    printf("----------------------------------------------------------------\n");
+}
+
+
 // produci navi da mettere poi limite
 void produciNavi(giocatore *player) {
     int nuoveNavi;
-    printf("Quanti navi vuoi produrre?\n");
-    scanf("%d", &nuoveNavi);
+
+    // che tipo di navi vuoi produrre??
+    char comandoProduciNavi[20];
+    printf("Che navi vuoi produrre?\n");
+    printf("Scrivi 'TIPOLOGIA' se vuoi vedere i tipi di navi\n");
+    while(1) {
+        scanf("%20s", comandoProduciNavi);
+        if (strcmp(comandoProduciNavi, "TIPOLOGIA") == 0) {
+            stampaTipologieDiNavi();
+        } else if (strcmp(comandoProduciNavi, "CACCIA") == 0) {
+            printf("Quanti CACCIA vuoi produrre\n");
+            scanf("%d", &nuoveNavi);
+        } else if (strcmp(comandoProduciNavi, "INTERCETTATORE") == 0) {
+            printf("Quanti INTERCETTATORI vuoi produrre\n");
+            scanf("%d", &nuoveNavi);
+        } else if (strcmp(comandoProduciNavi, "BOMBARDIERE") == 0) {
+            printf("Quanti BOMBARDIERI vuoi produrre\n");
+            scanf("%d", &nuoveNavi);
+        } else if (strcmp(comandoProduciNavi, "ESCI") == 0) {
+            printf("Uscita da produciNavi\n");
+            break;
+        }else {
+            printf("Nave inestistente scrivi 'TIPOLOGIA' per vedere la lista di navi\n");
+        }
+    }
+
     player->cacciaPlayer += nuoveNavi;
 };
 
