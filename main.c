@@ -1,3 +1,5 @@
+// AGGIUNGERE ERRORI SUI NUMERI QUANDO si scrive, aggiungere errori su scritte sbagliate
+
 #include <stdio.h>
 #include <stdlib.h> 
 #include <time.h>
@@ -38,6 +40,7 @@ const char *arrayComando[] = {
     "PRODUCINAVI",
     "MANDANAVI",
     "DIFFICOLTA",
+    "SCAN",
     "EXIT",
     "USCITATOTALE"
 }; 
@@ -92,8 +95,8 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuc
         secondiDiReazione = 3;
         possibilitaDiSuccessoTrasferimentoComputerNavi = 9;
         printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
-
     }
+
 }
 
 // in base alla difficolta, verranno cambiati i praramentri di mandaNAviComputer
@@ -106,9 +109,10 @@ void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pia
     int randomSuccessNumb = (rand() % 10) + 1; 
     if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
         printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
-        vaaxNpc->cacciaComputer = randomInvioCaccia;
-        pianetaA->cacciaComputer = randomInvioCaccia;
-        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer - pianetaA->cacciaComputer;
+        // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
+        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer + randomInvioCaccia;
+        pianetaA->cacciaComputer = pianetaA->cacciaComputer + vaaxNpc->cacciaComputer;
+        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer;
 
     } else {
         printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
@@ -117,7 +121,10 @@ void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pia
 
 
 volatile bool timerBool = true;
-// funziona nache senza argomento void pointer
+// funziona nache senza argomento void pointer, ncesario void per un pthread, e poi utilizzo di varibiabile con casting putnartore con arg
+// per fare in modo di utilizzare arg, altrimenti dato che arg e' in void
+// qualsiasi modo per richiamarlo putnera sempre su putnatore su indirizzo di memoria
+//
 void* computerAction(void* arg) {
     int* secondiDiReazione = (int*)arg; // castiamo puntatore void inint
     while (timerBool) {
@@ -127,8 +134,13 @@ void* computerAction(void* arg) {
         }
         mandaNaviComputer(&numeroDiNaviInviati, &VaaxNpc, &pianetaA);
     }
-    printf("ciao chiuso computer\n");
-    return NULL;
+    pthread_exit(NULL);
+}
+
+
+void* battagliaInTotTempo(void* arg) {
+    printf("entrato in battaglia tempo tot\n");
+    return 0;
 }
 
 
@@ -189,6 +201,7 @@ bool risposteComandi(const char* inputUtente) {
         printf("'PRODUCINAVI' per produrre navi\n");
         printf("'MANDANAVI' per mandare le navi ai pianeti\n");
         printf("'DIFFICOLTA' seleziona difficolta di gioco\n");
+        printf("'SCAN' stampa informazioni riguardanti la partita\n");
         printf("'EXIT' per andare in Lobby Main\n");
         printf("'USCITATOTALE' per uscire totalemente\n");
         printf("-------------------------------------------\n");
@@ -209,9 +222,21 @@ bool risposteComandi(const char* inputUtente) {
         modificaDifficolta(&numeroDiNaviInviati, &secondiDiReazione, &possibilitaDiSuccessoTrasferimentoComputerNavi);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
+        printf("-------------------------------------------\n");
+        printf("#################SCANNER-REPORT####################\n");
+        printf("... scanning ...\n");
+        printf("Totalenavi player: %d\n", player.cacciaPlayer);
+        printf("Totale navi player in pianeta a : %d\n", pianetaA.cacciaPlayer);
+        ///
+        printf("#################separatore####################\n");
+        printf("Totalenavi computer: %d\n", VaaxNpc.cacciaComputer);
+        printf("Totale navi del computer in pianeta a : %d\n", pianetaA.cacciaComputer);
+        printf("#################SCANNER-END####################\n");
+        printf("-------------------------------------------\n");
+    } else if (strcmp(inputUtente, arrayComando[5]) == 0) {
         printf("RITORNO A MAIN\n");
         return whileComandi = false;
-    } else if (strcmp(inputUtente, arrayComando[5]) == 0) {
+    } else if (strcmp(inputUtente, arrayComando[6]) == 0) {
         printf("FINE PROGRAMMA..");
         exit(1);
     }
@@ -232,13 +257,14 @@ int main () {
     }
 
 
-    pthread_t timerMandareNavi; 
+    pthread_t timerMandareNavi, timerGuerraTimer; 
 
 
     printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
     pthread_create(&timerMandareNavi, NULL, computerAction, &secondiDiReazione);
+    pthread_create(&timerGuerraTimer, NULL, battagliaInTotTempo, NULL);
 
-    printf("thread partito\n");
+    printf("threads partiti\n");
 
 
     // configurazione init a 0 di struct Giocatori
@@ -252,14 +278,15 @@ int main () {
         char *inputUtente = bufferComandi(); 
         risposteComandi(inputUtente);
     }
+    printf("#################SCANNER-REPORT####################\n");
     printf("Totalenavi player: %d\n", player.cacciaPlayer);
     printf("Totale navi player in pianeta a : %d\n", pianetaA.cacciaPlayer);
     ///
     printf("#################separatore####################\n");
     printf("Totalenavi computer: %d\n", VaaxNpc.cacciaComputer);
     printf("Totale navi del computer in pianeta a : %d\n", pianetaA.cacciaComputer);
+    printf("#################swaggerend####################\n");
     //funziona anche senza questa pthreadexit Clean clode
-    pthread_exit(NULL);
     return 0;
 }
 
