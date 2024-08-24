@@ -10,13 +10,23 @@
 
 typedef struct {
     int cacciaPlayer;
+    int intercettatorePlayer;
+    int bombardierePlayer;
 } giocatore;
 typedef struct {
     int cacciaComputer;
+    int intercettatoreComputer;
+    int bombardiereComputer;
 } computer;
 typedef struct {
+    //PLAYER NAVI
     int cacciaPlayer;
+    int intercettatorePlayer;
+    int bombardierePlayer;
+    //COMPUTER NAVI
     int cacciaComputer;
+    int intercettatoreComputer;
+    int bombardiereComputer;
 } pianeta;
 
 
@@ -200,12 +210,15 @@ void produciNavi(giocatore *player) {
         } else if (strcmp(comandoProduciNavi, "CACCIA") == 0) {
             printf("Quanti CACCIA vuoi produrre\n");
             scanf("%d", &nuoveNavi);
+            player->cacciaPlayer += nuoveNavi;
         } else if (strcmp(comandoProduciNavi, "INTERCETTATORE") == 0) {
             printf("Quanti INTERCETTATORI vuoi produrre\n");
             scanf("%d", &nuoveNavi);
+            player->intercettatorePlayer += nuoveNavi;
         } else if (strcmp(comandoProduciNavi, "BOMBARDIERE") == 0) {
             printf("Quanti BOMBARDIERI vuoi produrre\n");
             scanf("%d", &nuoveNavi);
+            player->bombardierePlayer += nuoveNavi;
         } else if (strcmp(comandoProduciNavi, "ESCI") == 0) {
             printf("Uscita da produciNavi\n");
             break;
@@ -264,13 +277,30 @@ bool risposteComandi(const char* inputUtente) {
     } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
         printf("-------------------------------------------\n");
         printf("#################SCANNER-REPORT####################\n");
+        printf("#################NAVI PLAYER####################\n");
         printf("... scanning ...\n");
-        printf("Totalenavi player: %d\n", player.cacciaPlayer);
-        printf("Totale navi player in pianeta a : %d\n", pianetaA.cacciaPlayer);
+        printf("Totalenavi player:\n");
+        printf("navi caccia: %d\n", player.cacciaPlayer);
+        printf("navi intercettatori: %d\n", player.intercettatorePlayer);
+        printf("navi bombardieri: %d\n", player.bombardierePlayer);
         ///
-        printf("#################separatore####################\n");
-        printf("Totalenavi computer: %d\n", VaaxNpc.cacciaComputer);
-        printf("Totale navi del computer in pianeta a : %d\n", pianetaA.cacciaComputer);
+        printf("#################NAVI COMPUTER####################\n");
+        printf("Totalenavi computer: \n");
+        printf("navi caccia: %d\n", VaaxNpc.cacciaComputer);
+        printf("navi intercettatori: %d\n", VaaxNpc.intercettatoreComputer);
+        printf("navi bombardieri: %d\n", VaaxNpc.bombardiereComputer);
+        printf("#################PIANETTA-A SCAN####################\n");
+        // NAVI PLAYER
+        printf("NAVI DEL PLAYER IN PIANETA A\n");
+        printf("navi caccia: %d\n", pianetaA.cacciaPlayer);
+        printf("navi intercettatori: %d\n", pianetaA.intercettatorePlayer);
+        printf("navi bombardieri: %d\n", pianetaA.bombardierePlayer);
+        // NAVI COMPUTER
+        printf("NAVI DEL COMPUTER IN PIANETA A\n");
+        printf("navi caccia: %d\n", pianetaA.cacciaComputer);
+        printf("navi intercettatori: %d\n", pianetaA.intercettatoreComputer);
+        printf("navi bombardieri: %d\n", pianetaA.bombardiereComputer);
+
         printf("#################SCANNER-END####################\n");
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[5]) == 0) {
