@@ -121,8 +121,9 @@ void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pia
         printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
         // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
         vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer + randomInvioCaccia;
-        pianetaA->cacciaComputer = pianetaA->cacciaComputer + vaaxNpc->cacciaComputer;
-        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer;
+        //qui 
+        pianetaA->cacciaComputer += vaaxNpc->cacciaComputer; 
+        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer - randomInvioCaccia;
 
     } else {
         printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
@@ -226,8 +227,6 @@ void produciNavi(giocatore *player) {
             printf("Nave inestistente scrivi 'TIPOLOGIA' per vedere la lista di navi\n");
         }
     }
-
-    player->cacciaPlayer += nuoveNavi;
 };
 
 char* bufferComandi() {
