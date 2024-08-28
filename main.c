@@ -115,12 +115,12 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuc
 void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pianetaA){
     srand(time(NULL));
     int randomInvioCaccia = (rand() % (*invioCacciaComputer)) + 1;
-    printf("random: %d\n", randomInvioCaccia);
+    // printf("random: %d\n", randomInvioCaccia);
     // ora probabilita che vengano mandati le navi 
     srand(time(NULL)); 
     int randomSuccessNumb = (rand() % 10) + 1; 
     if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
-        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        //        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
         // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
         vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer + randomInvioCaccia;
         //qui 
@@ -128,7 +128,7 @@ void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pia
         vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer - randomInvioCaccia;
 
     } else {
-        printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        //      printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
     }
 }
 
@@ -152,12 +152,12 @@ void* computerAction(void* arg) {
 
 
 void* battagliaInTotTempo(void* arg) {
-    printf("entrato in battaglia tempo tot\n");
+    // printf("entrato in battaglia tempo tot\n");
     while (timerBool) {
         for (int timer = 4; timer > 0; timer --) {
             sleep(1);
         }
-        printf("battaglia in corso..\n");
+        // printf("battaglia in corso..\n");
     }
     pthread_exit(NULL);
 }
@@ -168,8 +168,13 @@ void* battagliaInTotTempo(void* arg) {
 void mandaNavi(giocatore *player, pianeta *pianetaA){
     int naviDaMandare;
     static char nomeDelPianeta[50];
-    printf("Quanti navi vuoi mandare?\n");
+    printf("Quali navi vuoi mandare? Scrivi 'LISTANAVI' per vedere quali hai a disposizione");
     scanf("%d", &naviDaMandare);
+
+    while(1) {
+
+    }
+
     printf("In che pianeta vuoi mandarli?\n");
     printf("Puoi inviarli in:\n");
     printf("PIANETA-A\n");
