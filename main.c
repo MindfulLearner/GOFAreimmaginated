@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
+
+
 typedef struct {
     int cacciaPlayer;
     int intercettatorePlayer;
@@ -324,8 +326,6 @@ int main () {
         printf("NO\n");
         return 0;
     }
-
-
     pthread_t timerMandareNavi, timerGuerraTimer; 
 
 
@@ -334,7 +334,6 @@ int main () {
     pthread_create(&timerGuerraTimer, NULL, battagliaInTotTempo, NULL);
 
     printf("threads partiti\n");
-
 
     // configurazione init a 0 di struct Giocatori
     // configuro la prompt comandi 
@@ -358,5 +357,3 @@ int main () {
     //funziona anche senza questa pthreadexit Clean clode
     return 0;
 }
-
-

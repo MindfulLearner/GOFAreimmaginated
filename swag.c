@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
+
 int main () {
 
 int nums[4] = {9,6,2,7};
