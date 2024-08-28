@@ -63,6 +63,14 @@ const char *sceltaDifficolta[] = {
     "HARD"
 };
 
+const char *sceltaNavi[] = {
+    "TIPOLOGIA", 
+    "CACCIA",
+    "INTERCETTATORE",
+    "BOMBARDIERE",
+    "ESCI"
+};
+
 //Parametri di difficolta DEFAULT EASy, non si puo mettere in una data structure in cui praticamente viene richiamato solo quello
 //e modifica i parametri da li
 int numeroDiNaviInviati = 8;
@@ -169,28 +177,47 @@ void mandaNavi(giocatore *player, pianeta *pianetaA){
     int naviDaMandare;
     static char nomeDelPianeta[50];
     printf("Quali navi vuoi mandare? Scrivi 'LISTANAVI' per vedere quali hai a disposizione");
-    scanf("%d", &naviDaMandare);
+
+    static char comandoMandaNavi[50];
 
     while(1) {
-
-    }
-
-    printf("In che pianeta vuoi mandarli?\n");
-    printf("Puoi inviarli in:\n");
-    printf("PIANETA-A\n");
-    printf("PIANETA-B\n");
-    scanf("%49s", &nomeDelPianeta);
-    // comparazione nome pianeta e pianeti list
-    if (strcmp(nomeDelPianeta, pianetiList[0]) == 0){
-        // meno a player + a pianeta selezionato
-        // CONTROLLO NAVI FUNZIONANATE
-        if (player->cacciaPlayer > naviDaMandare) {
-            player->cacciaPlayer -= naviDaMandare;
-            pianetaA -> cacciaPlayer += naviDaMandare; 
-        } else {
-            printf("non hai abbastanza navi da mandare\n");
+        scanf("%49s", &comandoMandaNavi);
+        if (strcmp(comandoMandaNavi, sceltaNavi[0]) == 0){
+            // tipologia navi 
+            stampaTipologieDiNavi();
+        }else if (strcmp( comandoMandaNavi, sceltaNavi[1]) == 0){
+            // caccia
+            scanf("%s", &naviDaMandare);
+            printf("In che pianeta vuoi mandarli?\n");
+            printf("Puoi inviarli in:\n");
+            printf("PIANETA-A\n");
+            printf("PIANETA-B\n");
+            scanf("%49s", &nomeDelPianeta);
+            // comparazione nome pianeta e pianeti list
+            if (strcmp(nomeDelPianeta, pianetiList[0]) == 0) {
+                // meno a player + a pianeta selezionato
+                // CONTROLLO NAVI FUNZIONANATE
+                if (player->cacciaPlayer > naviDaMandare) {
+                    player->cacciaPlayer -= naviDaMandare;
+                    pianetaA->cacciaPlayer += naviDaMandare;
+                }else {
+                    printf("NON HAI ABBASTANZA NAVI DA MANDARE\n");
+                }
+            }
         }
+    } else if( strcmp (nomeDelPianeta, pianetiList[1]) == 0){
     }
+}
+} else if (strcmp( comandoMandaNavi, sceltaNavi[2]) == 0){
+    //inter
+}
+} else if (strcmp( comandoMandaNavi, sceltaNavi[3]) == 0){
+    // bomb
+}
+} else if (strcmp( comandoMandaNavi, sceltaNavi[4]) == 0){
+    //esci
+}
+}
 };
 
 void stampaTipologieDiNavi() {
@@ -213,21 +240,21 @@ void produciNavi(giocatore *player) {
     printf("Scrivi 'TIPOLOGIA' se vuoi vedere i tipi di navi\n");
     while(1) {
         scanf("%20s", comandoProduciNavi);
-        if (strcmp(comandoProduciNavi, "TIPOLOGIA") == 0) {
+        if (strcmp(comandoProduciNavi, sceltaNavi[0]) == 0) {
             stampaTipologieDiNavi();
-        } else if (strcmp(comandoProduciNavi, "CACCIA") == 0) {
+        } else if (strcmp(comandoProduciNavi, sceltaNavi[1]) == 0) {
             printf("Quanti CACCIA vuoi produrre\n");
             scanf("%d", &nuoveNavi);
             player->cacciaPlayer += nuoveNavi;
-        } else if (strcmp(comandoProduciNavi, "INTERCETTATORE") == 0) {
+        } else if (strcmp(comandoProduciNavi, sceltaNavi[2]) == 0) {
             printf("Quanti INTERCETTATORI vuoi produrre\n");
             scanf("%d", &nuoveNavi);
             player->intercettatorePlayer += nuoveNavi;
-        } else if (strcmp(comandoProduciNavi, "BOMBARDIERE") == 0) {
+        } else if (strcmp(comandoProduciNavi, sceltaNavi[3]) == 0) {
             printf("Quanti BOMBARDIERI vuoi produrre\n");
             scanf("%d", &nuoveNavi);
             player->bombardierePlayer += nuoveNavi;
-        } else if (strcmp(comandoProduciNavi, "ESCI") == 0) {
+        } else if (strcmp(comandoProduciNavi, sceltaNavi[4]) == 0) {
             printf("Uscita da produciNavi\n");
             break;
         }else {
