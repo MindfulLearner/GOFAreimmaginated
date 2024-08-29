@@ -64,7 +64,7 @@ const char *sceltaDifficolta[] = {
 };
 
 const char *sceltaNavi[] = {
-    "TIPOLOGIA", 
+    "LISTANAVI", 
     "CACCIA",
     "INTERCETTATORE",
     "BOMBARDIERE",
@@ -76,12 +76,13 @@ const char *sceltaNavi[] = {
 int numeroDiNaviInviati = 8;
 int secondiDiReazione = 10;
 int possibilitaDiSuccessoTrasferimentoComputerNavi = 6;
+int secondiPerBattaglia = 20;
 
 
 // DIFFICOLTA EASY IN DEFAULT>?a
 static char difficolta[10] = "EASY";
 
-void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuccesso) {
+void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuccesso, int* swag) {
     printf("selezioan una difficolta:\n");
     printf("EASY\n");
     printf("MEDIUM\n");
@@ -98,7 +99,9 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuc
         numeroDiNaviInviati = 8;
         secondiDiReazione = 10;
         possibilitaDiSuccessoTrasferimentoComputerNavi = 6;
+        secondiPerBattaglia = 20;
         printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
+        printf("Ci saranno le battaglie ogni %d\n", secondiPerBattaglia);
         printf("HAI SELEZIONATO EASY\n");
 
     } else if (strcmp(difficolta, sceltaDifficolta[1]) == 0){
@@ -106,37 +109,65 @@ void modificaDifficolta(int* invieraNavi, int* secondiTot, int* possibilitaDiSuc
         numeroDiNaviInviati = 15;
         secondiDiReazione = 6;
         possibilitaDiSuccessoTrasferimentoComputerNavi = 7;
+        secondiPerBattaglia = 10;
         printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
-
+        printf("Ci saranno le battaglie ogni %d\n", secondiPerBattaglia);
         //piu leggibile con else if altrimenti con solo else non cambierebbe
     } else if (strcmp(difficolta, sceltaDifficolta[2]) == 0){
         printf("HAI SELEZIONATO HARD\n");
         numeroDiNaviInviati = 30;
         secondiDiReazione = 3;
         possibilitaDiSuccessoTrasferimentoComputerNavi = 9;
+        secondiPerBattaglia = 8; 
         printf("Adesso computer inviera tra 1 a %d navi ogni %d secondi la probalita successo: %d su 10\n", *invieraNavi, *secondiTot, *possibilitaDiSuccesso);
+        printf("Ci saranno le battaglie ogni %d\n", secondiPerBattaglia);
+
     }
 
 }
 
 // in base alla difficolta, verranno cambiati i praramentri di mandaNAviComputer
-void mandaNaviComputer(int* invioCacciaComputer, computer *vaaxNpc, pianeta *pianetaA){
+void mandaNaviComputer(int* randomNumeroNaviInviati, computer *vaaxNpc, pianeta *pianetaA){
     srand(time(NULL));
-    int randomInvioCaccia = (rand() % (*invioCacciaComputer)) + 1;
-    // printf("random: %d\n", randomInvioCaccia);
+    int randomGeneratoNaviInviati = (rand() % (*randomNumeroNaviInviati)) + 1;
+    // printf("random: %d\n", randomGeneratoNaviInviati);
     // ora probabilita che vengano mandati le navi 
     srand(time(NULL)); 
     int randomSuccessNumb = (rand() % 10) + 1; 
-    if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
-        //        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
-        // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
-        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer + randomInvioCaccia;
-        //qui 
-        pianetaA->cacciaComputer += vaaxNpc->cacciaComputer; 
-        vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer - randomInvioCaccia;
-
-    } else {
-        //      printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+    int randomTipoDiNavi = (rand() % 3) + 1;
+    if (randomTipoDiNavi == 1) {
+        if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
+            //        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+            // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
+            vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer + randomGeneratoNaviInviati;
+            //qui 
+            pianetaA->cacciaComputer += vaaxNpc->cacciaComputer; 
+            vaaxNpc->cacciaComputer = vaaxNpc->cacciaComputer - randomGeneratoNaviInviati;
+        } else {
+            //      printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        }
+    } else if (randomTipoDiNavi == 2) {
+        if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
+            //        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+            // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
+            vaaxNpc->intercettatoreComputer = vaaxNpc->intercettatoreComputer + randomGeneratoNaviInviati;
+            //qui 
+            pianetaA->intercettatoreComputer += vaaxNpc->intercettatoreComputer; 
+            vaaxNpc->intercettatoreComputer = vaaxNpc->intercettatoreComputer - randomGeneratoNaviInviati;
+        } else {
+            //      printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        }
+    } else if (randomTipoDiNavi == 3) {
+        if (randomSuccessNumb <= possibilitaDiSuccessoTrasferimentoComputerNavi) {
+            //        printf("%d <= %d successo\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+            // parti di codice non necessari, ma necessari in caso si volessero aggiungere altre logiche a riguardo
+            vaaxNpc->bombardiereComputer = vaaxNpc->bombardiereComputer + randomGeneratoNaviInviati;
+            //qui 
+            pianetaA->bombardiereComputer += vaaxNpc->bombardiereComputer; 
+            vaaxNpc->bombardiereComputer = vaaxNpc->bombardiereComputer - randomGeneratoNaviInviati;
+        } else {
+            //      printf("%d > %d fallimento\n", randomSuccessNumb, possibilitaDiSuccessoTrasferimentoComputerNavi);
+        }
     }
 }
 
@@ -160,65 +191,61 @@ void* computerAction(void* arg) {
 
 
 void* battagliaInTotTempo(void* arg) {
+    int* secondiPerBattaglia = (int*)arg; 
     // printf("entrato in battaglia tempo tot\n");
     while (timerBool) {
-        for (int timer = 4; timer > 0; timer --) {
+        for (int timer = *secondiPerBattaglia; timer > 0; timer --) {
             sleep(1);
         }
+
+/* 
+ LOGICA DELLA BATTAGLIA 
+- considerazioni carta forbice e sasso
+#CARTA CACCIA
+win rate di carta vs sasso 8 su 10, se sta su sopra 8 perde
+win rate di carta vs forbice 2 su 10 se sta su sopra 2 pered
+win rate di carta vs carta 5 su 10 se sta sopra 5 perde
+#SASSO INTERCETTATOTRE
+win rate di sasso vs forbice 8 su 10, se sta su sopra 8 perde
+win rate di sasso vs carta 2 su 10 se sta su sopra 2 pered
+win rate di sasso vs sasso 5 su 10 se sta sopra 5 perde
+#FORBICE BOMBARDIERE
+win rate di forbice vs carta 8 su 10, se sta su sopra 8 perde
+win rate di forbice vs sasso 2 su 10 se sta su sopra 2 pered
+win rate di forbice vs forbice 5 su 10 se sta sopra 5 perde
+
+carta'caccia' > sasso'intercettatore' > forbice'bombardiere' > (RICOMINCIA) carta... 
+
+attaccante sara sempre il player, quindi
+si useranno le truppe di player per attaccare computer, le probabilita sia per attaccante che difensore sara sempre uguale
+cambiera solo tramite il numero di truppe che ci sono
+
+come si svolgera'? 
+
+randomNum da 1 a 3
+examp: se esce 2 
+2 = intercettatorePLAYER 
+attacchera!
+random da 1 a 3 
+esce 1
+1 = cacciaComputer
+
+intercettatore avra un 2 su 10 per battere caccia
+perche sasso vs carta e 2 su 10
+
+il ciclo continuera fino a quando o player o computer avranno 0 truppe
+
+da implementare poi chi ha il dominio del pianeta
+
+*/
+
         // printf("battaglia in corso..\n");
     }
     pthread_exit(NULL);
 }
 
 
-//mandaNavi funzioner
-// AGGIUNGERE IF DI CONTROLLO SE PRESENTI SE POSSIBILE 
-void mandaNavi(giocatore *player, pianeta *pianetaA){
-    int naviDaMandare;
-    static char nomeDelPianeta[50];
-    printf("Quali navi vuoi mandare? Scrivi 'LISTANAVI' per vedere quali hai a disposizione");
 
-    static char comandoMandaNavi[50];
-
-    while(1) {
-        scanf("%49s", &comandoMandaNavi);
-        if (strcmp(comandoMandaNavi, sceltaNavi[0]) == 0){
-            // tipologia navi 
-            stampaTipologieDiNavi();
-        }else if (strcmp( comandoMandaNavi, sceltaNavi[1]) == 0){
-            // caccia
-            scanf("%s", &naviDaMandare);
-            printf("In che pianeta vuoi mandarli?\n");
-            printf("Puoi inviarli in:\n");
-            printf("PIANETA-A\n");
-            printf("PIANETA-B\n");
-            scanf("%49s", &nomeDelPianeta);
-            // comparazione nome pianeta e pianeti list
-            if (strcmp(nomeDelPianeta, pianetiList[0]) == 0) {
-                // meno a player + a pianeta selezionato
-                // CONTROLLO NAVI FUNZIONANATE
-                if (player->cacciaPlayer > naviDaMandare) {
-                    player->cacciaPlayer -= naviDaMandare;
-                    pianetaA->cacciaPlayer += naviDaMandare;
-                }else {
-                    printf("NON HAI ABBASTANZA NAVI DA MANDARE\n");
-                }
-            }
-        }
-    } else if( strcmp (nomeDelPianeta, pianetiList[1]) == 0){
-    }
-}
-} else if (strcmp( comandoMandaNavi, sceltaNavi[2]) == 0){
-    //inter
-}
-} else if (strcmp( comandoMandaNavi, sceltaNavi[3]) == 0){
-    // bomb
-}
-} else if (strcmp( comandoMandaNavi, sceltaNavi[4]) == 0){
-    //esci
-}
-}
-};
 
 void stampaTipologieDiNavi() {
     printf("----------------------TIPOLOGIA NAVI-------------------------------\n");
@@ -229,6 +256,94 @@ void stampaTipologieDiNavi() {
     printf("----------------------------------------------------------------\n");
 }
 
+void comparazionePianetiInvioNavi(int naviDaMandare, char nomeDelPianeta[50], giocatore *player, pianeta *pianetaA, char comandoMandaNavi[50]) {
+    // comparazione nome pianeta e pianeti list
+    // printf("%d\n", player->cacciaPlayer);
+    if (strcmp(nomeDelPianeta, pianetiList[0]) == 0) {
+        // meno a player + a pianeta selezionato
+        // CONTROLLO NAVI FUNZIONANATE
+        if (strcmp(comandoMandaNavi, sceltaNavi[1]) == 0)  {
+            if (player->cacciaPlayer > naviDaMandare) {
+                player->cacciaPlayer -= naviDaMandare;
+                pianetaA->cacciaPlayer += naviDaMandare;
+            } else {
+                printf("NON HAI ABBASTANZA CACCIA DA MANDARE\n");
+            }
+        }
+        if (strcmp(comandoMandaNavi, sceltaNavi[2]) == 0)  {
+            if (player->intercettatorePlayer > naviDaMandare) {
+                player->intercettatorePlayer -= naviDaMandare;
+                pianetaA->intercettatorePlayer += naviDaMandare;
+            } else {
+                printf("NON HAI ABBASTANZA INTERCETTATORI DA MANDARE\n");
+            }
+        }
+        if (strcmp(comandoMandaNavi, sceltaNavi[3]) == 0)  {
+            if (player->bombardierePlayer > naviDaMandare) {
+                player->bombardierePlayer -= naviDaMandare;
+                pianetaA->bombardierePlayer += naviDaMandare;
+            } else {
+                printf("NON HAI ABBASTANZA BOMBARDIERI DA MANDARE\n");
+            }
+        }
+    }
+}
+//mandaNavi funzioner
+// AGGIUNGERE IF DI CONTROLLO SE PRESENTI SE POSSIBILE 
+void mandaNavi(giocatore *player, pianeta *pianetaA){
+    int naviDaMandare;
+    static char nomeDelPianeta[50];
+    static char comandoMandaNavi[50];
+    while(1) {
+        printf("Quali navi vuoi mandare? Scrivi 'LISTANAVI' per vedere quali hai a disposizione\n");
+        scanf("%49s", &comandoMandaNavi);
+        if (strcmp(comandoMandaNavi, sceltaNavi[0]) == 0){
+            // tipologia navi 
+            stampaTipologieDiNavi();
+        } else if (strcmp(comandoMandaNavi, sceltaNavi[1]) == 0){
+            // caccia
+            printf("Quanti navi caccia vuoi mandare?\n");
+            scanf("%d", &naviDaMandare);
+            printf("In che pianeta vuoi mandarli?\n");
+            printf("Puoi inviarli in:\n");
+            printf("PIANETA-A\n");
+            printf("PIANETA-B\n");
+            scanf("%49s", &nomeDelPianeta);
+            // printf("%d\n", player->cacciaPlayer);
+            comparazionePianetiInvioNavi(naviDaMandare, nomeDelPianeta, player, pianetaA, comandoMandaNavi);
+            printf("hai mandato %d caccia\n", naviDaMandare);
+            break;
+        } else if (strcmp(comandoMandaNavi, sceltaNavi[2]) == 0){
+            //inter
+            printf("Quanti navi bombardieri vuoi mandare?\n");
+            scanf("%d", &naviDaMandare);
+            printf("In che pianeta vuoi mandarli?\n");
+            printf("Puoi inviarli in:\n");
+            printf("PIANETA-A\n");
+            printf("PIANETA-B\n");
+            scanf("%49s", &nomeDelPianeta);
+            comparazionePianetiInvioNavi(naviDaMandare, nomeDelPianeta, player, pianetaA, comandoMandaNavi);
+            printf("hai mandato %d caccia\n", naviDaMandare);
+            break;
+        } else if (strcmp(comandoMandaNavi, sceltaNavi[3]) == 0){
+            // bomb
+            printf("Quanti navi bombardieri vuoi mandare?\n");
+            scanf("%d", &naviDaMandare);
+            printf("In che pianeta vuoi mandarli?\n");
+            printf("Puoi inviarli in:\n");
+            printf("PIANETA-A\n");
+            printf("PIANETA-B\n");
+            scanf("%49s", &nomeDelPianeta);
+            comparazionePianetiInvioNavi(naviDaMandare, nomeDelPianeta, player, pianetaA, comandoMandaNavi);
+            printf("hai mandato %d caccia\n", naviDaMandare);
+            break;
+        } else if (strcmp(comandoMandaNavi, sceltaNavi[4]) == 0){
+            printf("ritorno Lobby\n");
+            break;
+        }
+    }
+}
+
 
 // produci navi da mettere poi limite
 void produciNavi(giocatore *player) {
@@ -237,7 +352,7 @@ void produciNavi(giocatore *player) {
     // che tipo di navi vuoi produrre??
     char comandoProduciNavi[20];
     printf("Che navi vuoi produrre?\n");
-    printf("Scrivi 'TIPOLOGIA' se vuoi vedere i tipi di navi\n");
+    printf("Scrivi 'LISTANAVI' se vuoi vedere i tipi di navi\n");
     while(1) {
         scanf("%20s", comandoProduciNavi);
         if (strcmp(comandoProduciNavi, sceltaNavi[0]) == 0) {
@@ -246,19 +361,25 @@ void produciNavi(giocatore *player) {
             printf("Quanti CACCIA vuoi produrre\n");
             scanf("%d", &nuoveNavi);
             player->cacciaPlayer += nuoveNavi;
+            printf("Hai prodotto %d caccia\n", nuoveNavi);
+            break;
         } else if (strcmp(comandoProduciNavi, sceltaNavi[2]) == 0) {
             printf("Quanti INTERCETTATORI vuoi produrre\n");
             scanf("%d", &nuoveNavi);
             player->intercettatorePlayer += nuoveNavi;
+            printf("Hai prodotto %d intercettatore\n", nuoveNavi);
+            break;
         } else if (strcmp(comandoProduciNavi, sceltaNavi[3]) == 0) {
             printf("Quanti BOMBARDIERI vuoi produrre\n");
             scanf("%d", &nuoveNavi);
             player->bombardierePlayer += nuoveNavi;
+            printf("Hai prodotto %d bombardieri\n", nuoveNavi);
+            break;
         } else if (strcmp(comandoProduciNavi, sceltaNavi[4]) == 0) {
             printf("Uscita da produciNavi\n");
             break;
         }else {
-            printf("Nave inestistente scrivi 'TIPOLOGIA' per vedere la lista di navi\n");
+            printf("Nave inestistente scrivi 'LISTANAVI' per vedere la lista di navi\n");
         }
     }
 };
@@ -305,7 +426,7 @@ bool risposteComandi(const char* inputUtente) {
     } else if (strcmp(inputUtente, arrayComando[3]) == 0) {
         printf("-------------------------------------------\n");
         printf("SCELTA DIFFICOLTA\n");
-        modificaDifficolta(&numeroDiNaviInviati, &secondiDiReazione, &possibilitaDiSuccessoTrasferimentoComputerNavi);
+        modificaDifficolta(&numeroDiNaviInviati, &secondiDiReazione, &possibilitaDiSuccessoTrasferimentoComputerNavi, &secondiPerBattaglia);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
         printf("-------------------------------------------\n");
@@ -363,7 +484,7 @@ int main () {
 
     printf("bot inizio programma, iniziera' mandare ogni 10 secondi 5 caccia in pianeta A\n");
     pthread_create(&timerMandareNavi, NULL, computerAction, &secondiDiReazione);
-    pthread_create(&timerGuerraTimer, NULL, battagliaInTotTempo, NULL);
+    pthread_create(&timerGuerraTimer, NULL, battagliaInTotTempo, &secondiPerBattaglia);
 
     printf("threads partiti\n");
 
