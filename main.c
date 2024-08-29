@@ -198,9 +198,9 @@ void* battagliaInTotTempo(void* arg) {
             sleep(1);
         }
 
-/* 
- LOGICA DELLA BATTAGLIA 
-- considerazioni carta forbice e sasso
+        /* 
+           LOGICA DELLA BATTAGLIA 
+           - considerazioni carta forbice e sasso
 #CARTA CACCIA
 win rate di carta vs sasso 8 su 10, se sta su sopra 8 perde
 win rate di carta vs forbice 2 su 10 se sta su sopra 2 pered
