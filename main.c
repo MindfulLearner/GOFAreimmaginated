@@ -71,6 +71,10 @@ const char *sceltaNavi[] = {
     "ESCI"
 };
 
+
+int quandoCeLaBattaglia;
+int quantoArrivanoINemici;
+
 //Parametri di difficolta DEFAULT EASy, non si puo mettere in una data structure in cui praticamente viene richiamato solo quello
 //e modifica i parametri da li
 int numeroDiNaviInviati = 8;
@@ -183,6 +187,8 @@ void* computerAction(void* arg) {
         for (int timer = *secondiDiReazione; timer > 0; timer--) {
             sleep(1);
             //printf("%d\n", timer);
+            quantoArrivanoINemici = timer;
+            printf("i nemici arriveranno in pianeta A fra %d secondi\n", quantoArrivanoINemici);
         }
         mandaNaviComputer(&numeroDiNaviInviati, &VaaxNpc, &pianetaA);
     }
@@ -196,7 +202,24 @@ void* battagliaInTotTempo(void* arg) {
     while (timerBool) {
         for (int timer = *secondiPerBattaglia; timer > 0; timer --) {
             sleep(1);
+            quandoCeLaBattaglia = timer;
         }
+
+
+        printf("combattimento in corso\n")
+            for (int t = 2; t > 0; t --) {
+                sleep(1);
+                int randomAttaccoPlayerNave = (rand() % 3) + 1; 
+
+                if (randomAttaccoPlayerNave == 1){
+
+                }else if( randomAttaccoPlayerNave == 2){
+
+                }else if(randomAttaccoPlayerNave == 3) {
+
+                }
+
+            }
 
         /* 
            LOGICA DELLA BATTAGLIA 
@@ -432,6 +455,11 @@ bool risposteComandi(const char* inputUtente) {
         printf("-------------------------------------------\n");
         printf("#################SCANNER-REPORT####################\n");
         printf("#################NAVI PLAYER####################\n");
+
+        printf("la prossima battaglia sara fra %d secondi\n", quandoCeLaBattaglia);
+
+
+
         printf("... scanning ...\n");
         printf("Totalenavi player:\n");
         printf("navi caccia: %d\n", player.cacciaPlayer);
