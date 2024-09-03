@@ -187,8 +187,6 @@ void* computerAction(void* arg) {
         for (int timer = *secondiDiReazione; timer > 0; timer--) {
             sleep(1);
             //printf("%d\n", timer);
-            quantoArrivanoINemici = timer;
-            printf("i nemici arriveranno in pianeta A fra %d secondi\n", quantoArrivanoINemici);
         }
         mandaNaviComputer(&numeroDiNaviInviati, &VaaxNpc, &pianetaA);
     }
@@ -196,9 +194,31 @@ void* computerAction(void* arg) {
 }
 
 
-char naveInDifesa(numeroRandomDaUnoATre) {
+int naveInDifesa(int numeroRandomDaUnoATre) {
+
+    /**player caccia in attacco in questo caso difesa computer e' caccia quindi
+      possibilita 50% 
+      */
+    if (numeroRandomDaUnoATre == 1) {
+
+        int playerAttaccoCacciaWinRate = (rand() % 10) + 1;
+        int computerDifesaCacciaWinRate = (rand() % 10) + 1;
+
+if (playerAttaccoCacciaWinRate <= 5) {
+    printf("vinto e' uscito %d contro 5\n", playerAttaccoCacciaWinRate);
+} else {
+    printf("perso e' uscito %d contro 5\n", playerAttaccoCacciaWinRate);
+}
+
+sleep(1);
 
 
+
+
+    }else if (numeroRandomDaUnoATre == 2) {
+
+    }else if (numeroRandomDaUnoATre == 3) {
+    }
 
 }
 
@@ -209,31 +229,31 @@ void* battagliaInTotTempo(void* arg) {
         for (int timer = *secondiPerBattaglia; timer > 0; timer --) {
             sleep(1);
             quandoCeLaBattaglia = timer;
+            printf("i nemici arriveranno in pianeta A fra %d secondi\n", quandoCeLaBattaglia);
         }
 
 
         printf("combattimento in corso\n");
         for (int t = 2; t > 0; t --) {
             sleep(1);
+        }
             int randomAttaccoPlayerNave = (rand() % 3) + 1; 
 
             int randomDifesaComputer = (rand() % 3) + 1;
 
+             randomAttaccoPlayerNave = 1;
+             randomDifesaComputer = 1;
 
+            /*player caccia in attacco*/
             if (randomAttaccoPlayerNave == 1){
+                naveInDifesa(randomDifesaComputer);
 
-                static char v[12] = naveInDifesa(randomDifesaComputer);
-                if strcmp(// finire
+            }else if( randomAttaccoPlayerNave == 2){
 
+            }else if(randomAttaccoPlayerNave == 3) {
 
+            }
 
-                        }else if( randomAttaccoPlayerNave == 2){
-
-                        }else if(randomAttaccoPlayerNave == 3) {
-
-                        }
-
-                        }
 
                         /* 
                            LOGICA DELLA BATTAGLIA 
