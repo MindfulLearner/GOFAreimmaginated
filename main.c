@@ -213,31 +213,31 @@ void* battagliaInTotTempo(void* arg) {
 
 
         printf("combattimento in corso\n");
-            for (int t = 2; t > 0; t --) {
-                sleep(1);
-                int randomAttaccoPlayerNave = (rand() % 3) + 1; 
+        for (int t = 2; t > 0; t --) {
+            sleep(1);
+            int randomAttaccoPlayerNave = (rand() % 3) + 1; 
 
-                int randomDifesaComputer = (rand() % 3) + 1;
-
-
-                if (randomAttaccoPlayerNave == 1){
-
-                    static char v[12] = naveInDifesa(randomDifesaComputer);
-if strcmp(// finire
+            int randomDifesaComputer = (rand() % 3) + 1;
 
 
+            if (randomAttaccoPlayerNave == 1){
 
-                }else if( randomAttaccoPlayerNave == 2){
+                static char v[12] = naveInDifesa(randomDifesaComputer);
+                if strcmp(// finire
 
-                }else if(randomAttaccoPlayerNave == 3) {
 
-                }
 
-            }
+                        }else if( randomAttaccoPlayerNave == 2){
 
-        /* 
-           LOGICA DELLA BATTAGLIA 
-           - considerazioni carta forbice e sasso
+                        }else if(randomAttaccoPlayerNave == 3) {
+
+                        }
+
+                        }
+
+                        /* 
+                           LOGICA DELLA BATTAGLIA 
+                           - considerazioni carta forbice e sasso
 #CARTA CACCIA
 win rate di carta vs sasso 8 su 10, se sta su sopra 8 perde
 win rate di carta vs forbice 2 su 10 se sta su sopra 2 pered
