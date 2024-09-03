@@ -196,6 +196,12 @@ void* computerAction(void* arg) {
 }
 
 
+char naveInDifesa(numeroRandomDaUnoATre) {
+
+
+
+}
+
 void* battagliaInTotTempo(void* arg) {
     int* secondiPerBattaglia = (int*)arg; 
     // printf("entrato in battaglia tempo tot\n");
@@ -206,12 +212,20 @@ void* battagliaInTotTempo(void* arg) {
         }
 
 
-        printf("combattimento in corso\n")
+        printf("combattimento in corso\n");
             for (int t = 2; t > 0; t --) {
                 sleep(1);
                 int randomAttaccoPlayerNave = (rand() % 3) + 1; 
 
+                int randomDifesaComputer = (rand() % 3) + 1;
+
+
                 if (randomAttaccoPlayerNave == 1){
+
+                    static char v[12] = naveInDifesa(randomDifesaComputer);
+if strcmp(// finire
+
+
 
                 }else if( randomAttaccoPlayerNave == 2){
 
