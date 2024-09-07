@@ -31,6 +31,10 @@ typedef struct {
     int bombardiereComputer;
 } pianeta;
 
+//funzione per clearrare il codice
+void cleanse() {
+system("clear");
+};
 
 // STRUTTURA PLAYER RESET ANCHE PIANETA
 giocatore player = {0};
@@ -204,6 +208,11 @@ int naveInDifesa(int numeroRandomDaUnoATre) {
         int playerAttaccoCacciaWinRate = (rand() % 10) + 1;
         int computerDifesaCacciaWinRate = (rand() % 10) + 1;
 
+
+
+
+
+
 if (playerAttaccoCacciaWinRate <= 5) {
     printf("vinto e' uscito %d contro 5\n", playerAttaccoCacciaWinRate);
 } else {
@@ -229,7 +238,7 @@ void* battagliaInTotTempo(void* arg) {
         for (int timer = *secondiPerBattaglia; timer > 0; timer --) {
             sleep(1);
             quandoCeLaBattaglia = timer;
-            printf("i nemici arriveranno in pianeta A fra %d secondi\n", quandoCeLaBattaglia);
+            // printf("i nemici arriveranno in pianeta A fra %d secondi\n", quandoCeLaBattaglia);
         }
 
 
@@ -486,6 +495,7 @@ bool risposteComandi(const char* inputUtente) {
         modificaDifficolta(&numeroDiNaviInviati, &secondiDiReazione, &possibilitaDiSuccessoTrasferimentoComputerNavi, &secondiPerBattaglia);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[4]) == 0) {
+        cleanse();
         printf("-------------------------------------------\n");
         printf("#################SCANNER-REPORT####################\n");
         printf("#################NAVI PLAYER####################\n");
