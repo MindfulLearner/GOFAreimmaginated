@@ -242,7 +242,7 @@ void* battagliaInTotTempo(void* arg) {
         }
 
 
-        printf("combattimento in corso\n");
+        // printf("combattimento in corso\n");
         for (int t = 2; t > 0; t --) {
             sleep(1);
         }
@@ -314,6 +314,7 @@ da implementare poi chi ha il dominio del pianeta
 
 
 void stampaTipologieDiNavi() {
+        cleanse();
     printf("----------------------TIPOLOGIA NAVI-------------------------------\n");
     printf("'CACCIA' navi che counterano i BOMBARDIERI\n");
     printf("'INTERCETTATORE' navi che counterano i CACCIA\n");
@@ -333,6 +334,7 @@ void comparazionePianetiInvioNavi(int naviDaMandare, char nomeDelPianeta[50], gi
                 player->cacciaPlayer -= naviDaMandare;
                 pianetaA->cacciaPlayer += naviDaMandare;
             } else {
+        cleanse();
                 printf("NON HAI ABBASTANZA CACCIA DA MANDARE\n");
             }
         }
@@ -341,6 +343,7 @@ void comparazionePianetiInvioNavi(int naviDaMandare, char nomeDelPianeta[50], gi
                 player->intercettatorePlayer -= naviDaMandare;
                 pianetaA->intercettatorePlayer += naviDaMandare;
             } else {
+        cleanse();
                 printf("NON HAI ABBASTANZA INTERCETTATORI DA MANDARE\n");
             }
         }
@@ -349,6 +352,7 @@ void comparazionePianetiInvioNavi(int naviDaMandare, char nomeDelPianeta[50], gi
                 player->bombardierePlayer -= naviDaMandare;
                 pianetaA->bombardierePlayer += naviDaMandare;
             } else {
+        cleanse();
                 printf("NON HAI ABBASTANZA BOMBARDIERI DA MANDARE\n");
             }
         }
@@ -404,6 +408,7 @@ void mandaNavi(giocatore *player, pianeta *pianetaA){
             printf("hai mandato %d caccia\n", naviDaMandare);
             break;
         } else if (strcmp(comandoMandaNavi, sceltaNavi[4]) == 0){
+        cleanse();
             printf("ritorno Lobby\n");
             break;
         }
@@ -442,9 +447,11 @@ void produciNavi(giocatore *player) {
             printf("Hai prodotto %d bombardieri\n", nuoveNavi);
             break;
         } else if (strcmp(comandoProduciNavi, sceltaNavi[4]) == 0) {
+        cleanse();
             printf("Uscita da produciNavi\n");
             break;
         }else {
+        cleanse();
             printf("Nave inestistente scrivi 'LISTANAVI' per vedere la lista di navi\n");
         }
     }
@@ -468,6 +475,7 @@ char* bufferComandi() {
 // comandi di richiesta 
 bool risposteComandi(const char* inputUtente) {
     if (strcmp(inputUtente, arrayComando[0]) == 0) {
+        cleanse();
         printf("-------------------------------------------\n");
         printf("I comandi che hai a disposizione sono:\n");
         printf("'TUTORIAL' per vedere le istruzioni di gioco e come gicoare\n");
@@ -479,17 +487,20 @@ bool risposteComandi(const char* inputUtente) {
         printf("'USCITATOTALE' per uscire totalemente\n");
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[1]) == 0) {
+        cleanse();
         // produci navi 
         printf("-------------------------------------------\n");
         printf("PRODUCINAVISWAG\n");
         produciNavi(&player);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[2]) == 0) {
+        cleanse();
         printf("-------------------------------------------\n");
         printf("MANDANAVI\n");
         mandaNavi(&player, &pianetaA);
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[3]) == 0) {
+        cleanse();
         printf("-------------------------------------------\n");
         printf("SCELTA DIFFICOLTA\n");
         modificaDifficolta(&numeroDiNaviInviati, &secondiDiReazione, &possibilitaDiSuccessoTrasferimentoComputerNavi, &secondiPerBattaglia);
@@ -499,11 +510,7 @@ bool risposteComandi(const char* inputUtente) {
         printf("-------------------------------------------\n");
         printf("#################SCANNER-REPORT####################\n");
         printf("#################NAVI PLAYER####################\n");
-
         printf("la prossima battaglia sara fra %d secondi\n", quandoCeLaBattaglia);
-
-
-
         printf("... scanning ...\n");
         printf("Totalenavi player:\n");
         printf("navi caccia: %d\n", player.cacciaPlayer);
@@ -530,9 +537,11 @@ bool risposteComandi(const char* inputUtente) {
         printf("#################SCANNER-END####################\n");
         printf("-------------------------------------------\n");
     } else if (strcmp(inputUtente, arrayComando[5]) == 0) {
+        cleanse();
         printf("RITORNO A MAIN\n");
         return whileComandi = false;
     } else if (strcmp(inputUtente, arrayComando[6]) == 0) {
+        cleanse();
         printf("FINE PROGRAMMA..");
         exit(1);
     }
