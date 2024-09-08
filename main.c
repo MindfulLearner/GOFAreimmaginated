@@ -248,6 +248,9 @@ void* battagliaInTotTempo(void* arg) {
         }
             int randomAttaccoPlayerNave = (rand() % 3) + 1; 
 
+	    //logica npc
+	    //:wq
+	    //
             int randomDifesaComputer = (rand() % 3) + 1;
 
              randomAttaccoPlayerNave = 1;
