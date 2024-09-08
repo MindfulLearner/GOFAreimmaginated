@@ -1,4 +1,5 @@
-// AGGIUNGERE ERRORI SUI NUMERI QUANDO si scrive, aggiungere errori su scritte sbagliate
+//avevo pushato ma 
+//// AGGIUNGERE ERRORI SUI NUMERI QUANDO si scrive, aggiungere errori su scritte sbagliate
 
 #include <stdio.h>
 #include <stdlib.h> 
@@ -212,6 +213,18 @@ int naveInDifesa(int numeroRandomDaUnoATre) {
 
 
 
+    srand(time(0));
+    
+    int numero = rand() % 10 + 1;
+    
+    if (numero >= 1 && numero <= 3) {
+        printf("Numero %d: È una nave\n", numero);
+    } else if (numero >= 4 && numero <= 6) {
+        printf("Numero %d: È un caccia\n", numero);
+    } else if (numero >= 7 && numero <= 10) {
+        printf("Numero %d: È un bombardiere\n", numero);
+    }
+    
 
 if (playerAttaccoCacciaWinRate <= 5) {
     printf("vinto e' uscito %d contro 5\n", playerAttaccoCacciaWinRate);
