@@ -1,6 +1,8 @@
 //avevo pushato ma 
 //// AGGIUNGERE ERRORI SUI NUMERI QUANDO si scrive, aggiungere errori su scritte sbagliate
 
+// ma perche non mi pusha bene non mi funziona l'account per pushare 
+//
 #include <stdio.h>
 #include <stdlib.h> 
 #include <time.h>
