@@ -1,5 +1,10 @@
  GOFAreimagined
 
+
+aggiornamento:
+
+aggiunto logica e cleanse per resettare la console di comando, implmentare battaglie ogni tot tra navi, sistemati nave caccia manca bombardiere e intercettatore
+
 ## Informazioni utili
 GOFA era uno dei miei giochi preferiti in assoluto. Era perfetto e ci ho speso dei soldi quando ero piccolo, e avevo un gruppo di amici inglesi con cui gicoavo e coordinavamo gli attacchi insieme.
 Questo codice è stato scritto con l'obiettivo di consolidare le mia abilità in C, per ora non ci saranno ancora pointer o almeno non così tanti, per ora è un progetto base che dovrà poi essere sistemato tramite organizzazione data structure etc..
