@@ -218,134 +218,307 @@ void *computerAction(void *arg)
 
 int naveInDifesa(int numeroRandomDaUnoATre)
 {
-
-    /**player caccia in attacco in questo caso difesa computer e' caccia quindi
-      possibilita 50%
-      */
-    if (numeroRandomDaUnoATre == 1)
+    srand(time(NULL));
+    
+    // CACCIA (CARTA) IN ATTACCO
+    if (numeroRandomDaUnoATre == 1) // Computer difende con Caccia
     {
-
-        int playerAttaccoCacciaWinRate = (rand() % 10) + 1;
-        int computerDifesaCacciaWinRate = (rand() % 10) + 1;
-
-        srand(time(0));
-
-        int numero = rand() % 10 + 1;
-
-        if (numero >= 1 && numero <= 3)
+        int winRate = (rand() % 10) + 1;
+        printf("Caccia VS Caccia\n");
+        
+        if (winRate > 5) // 50% possibilità
         {
-            printf("Numero %d: È una nave\n", numero);
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
         }
-        else if (numero >= 4 && numero <= 6)
+        else 
         {
-            printf("Numero %d: È un caccia\n", numero);
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
         }
-        else if (numero >= 7 && numero <= 10)
-        {
-            printf("Numero %d: È un bombardiere\n", numero);
-        }
-
-        if (playerAttaccoCacciaWinRate <= 5)
-        {
-            printf("vinto e' uscito %d contro 5\n", playerAttaccoCacciaWinRate);
-        }
-        else
-        {
-            printf("perso e' uscito %d contro 5\n", playerAttaccoCacciaWinRate);
-        }
-
-        sleep(1);
     }
-    else if (numeroRandomDaUnoATre == 2)
+    else if (numeroRandomDaUnoATre == 2) // Computer difende con Intercettatore
     {
+        int winRate = (rand() % 10) + 1;
+        printf("Caccia VS Intercettatore\n");
+        
+        if (winRate <= 8) // 80% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
     }
-    else if (numeroRandomDaUnoATre == 3)
+    else if (numeroRandomDaUnoATre == 3) // Computer difende con Bombardiere
     {
+        int winRate = (rand() % 10) + 1;
+        printf("Caccia VS Bombardiere\n");
+        
+        if (winRate <= 2) // 20% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
     }
+    return -1;
+}
+
+// Aggiungiamo due nuove funzioni per gli altri tipi di navi
+int intercettatoreInAttacco(int difesaComputer)
+{
+    srand(time(NULL));
+    
+    if (difesaComputer == 1) // VS Caccia
+    {
+        int winRate = (rand() % 10) + 1;
+        printf("Intercettatore VS Caccia\n");
+        
+        if (winRate <= 2) // 20% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
+    }
+    else if (difesaComputer == 2) // VS Intercettatore
+    {
+        int winRate = (rand() % 10) + 1;
+        printf("Intercettatore VS Intercettatore\n");
+        
+        if (winRate > 5) // 50% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
+    }
+    else if (difesaComputer == 3) // VS Bombardiere
+    {
+        int winRate = (rand() % 10) + 1;
+        printf("Intercettatore VS Bombardiere\n");
+        
+        if (winRate <= 8) // 80% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
+    }
+    return -1;
+}
+
+int bombardiereInAttacco(int difesaComputer)
+{
+    srand(time(NULL));
+    
+    if (difesaComputer == 1) // VS Caccia
+    {
+        int winRate = (rand() % 10) + 1;
+        printf("Bombardiere VS Caccia\n");
+        
+        if (winRate <= 8) // 80% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
+    }
+    else if (difesaComputer == 2) // VS Intercettatore
+    {
+        int winRate = (rand() % 10) + 1;
+        printf("Bombardiere VS Intercettatore\n");
+        
+        if (winRate <= 2) // 20% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
+    }
+    else if (difesaComputer == 3) // VS Bombardiere
+    {
+        int winRate = (rand() % 10) + 1;
+        printf("Bombardiere VS Bombardiere\n");
+        
+        if (winRate > 5) // 50% possibilità
+        {
+            printf("Vittoria! (WinRate: %d/10)\n", winRate);
+            return 1;
+        }
+        else 
+        {
+            printf("Sconfitta! (WinRate: %d/10)\n", winRate);
+            return 0;
+        }
+    }
+    return -1;
 }
 
 void *battagliaInTotTempo(void *arg)
 {
     int *secondiPerBattaglia = (int *)arg;
-    // printf("entrato in battaglia tempo tot\n");
+    int dominioPianeta = 0; 
+    int contatoreDominio = 0;
+    
     while (timerBool)
     {
+        // Visualizzazione conto alla rovescia
+        printf("\033[2J\033[H"); // Clear screen
+        printf("╔════════════════════════════════════════════════════════╗\n");
+        printf("║                  STATO DEL PIANETA                     ║\n");
+        printf("╠════════════════════════════════════════════════════════╣\n");
+        
         for (int timer = *secondiPerBattaglia; timer > 0; timer--)
         {
+            printf("\033[2J\033[H"); // Clear screen
+            printf("╔════════════════════════════════════════════════════════╗\n");
+            printf("║             PROSSIMA BATTAGLIA TRA: %2d                ║\n", timer);
+            printf("╚════════════════════════════════════════════════════════╝\n");
             sleep(1);
             quandoCeLaBattaglia = timer;
-            // printf("i nemici arriveranno in pianeta A fra %d secondi\n", quandoCeLaBattaglia);
         }
 
-        // printf("combattimento in corso\n");
+        printf("\033[2J\033[H"); // Clear screen
+        printf("╔════════════════════════════════════════════════════════╗\n");
+        printf("║                 BATTAGLIA IN CORSO!                     ║\n");
+        printf("╚════════════════════════════════════════════════════════╝\n");
+        
         for (int t = 2; t > 0; t--)
         {
             sleep(1);
         }
+        
+        int naviPlayer = pianetaA.cacciaPlayer + pianetaA.intercettatorePlayer + pianetaA.bombardierePlayer;
+        int naviComputer = pianetaA.cacciaComputer + pianetaA.intercettatoreComputer + pianetaA.bombardiereComputer;
+        
+        if (naviPlayer == 0 || naviComputer == 0) {
+            printf("\n⚠️  Non ci sono abbastanza navi per combattere! ⚠️\n");
+            continue;
+        }
+
+        srand(time(NULL));
         int randomAttaccoPlayerNave = (rand() % 3) + 1;
-
-        // logica npc
-        //: wq
-        //
         int randomDifesaComputer = (rand() % 3) + 1;
+        int risultatoBattaglia;
 
-        randomAttaccoPlayerNave = 1;
-        randomDifesaComputer = 1;
+        printf("\n🚀 FASE DI COMBATTIMENTO 🚀\n");
+        printf("════════════════════════════\n");
 
-        /*player caccia in attacco*/
+        // Gestione battaglia
         if (randomAttaccoPlayerNave == 1)
-        {
-            naveInDifesa(randomDifesaComputer);
-        }
+            risultatoBattaglia = naveInDifesa(randomDifesaComputer);
         else if (randomAttaccoPlayerNave == 2)
-        {
-        }
+            risultatoBattaglia = intercettatoreInAttacco(randomDifesaComputer);
         else if (randomAttaccoPlayerNave == 3)
+            risultatoBattaglia = bombardiereInAttacco(randomDifesaComputer);
+
+        // Gestione risultato battaglia e dominio
+        if (risultatoBattaglia == 1)
         {
+            printf("\n🎯 VITTORIA DEL PLAYER!\n");
+            // Rimuovi nave computer
+            if (randomDifesaComputer == 1 && pianetaA.cacciaComputer > 0)
+                pianetaA.cacciaComputer--;
+            else if (randomDifesaComputer == 2 && pianetaA.intercettatoreComputer > 0)
+                pianetaA.intercettatoreComputer--;
+            else if (randomDifesaComputer == 3 && pianetaA.bombardiereComputer > 0)
+                pianetaA.bombardiereComputer--;
+
+            if (dominioPianeta <= 0) {
+                contatoreDominio = 1;
+                dominioPianeta = 0;
+            } else {
+                contatoreDominio++;
+            }
+
+            if (contatoreDominio >= 3 && dominioPianeta != 1) {
+                dominioPianeta = 1;
+                printf("\n╔════════════════════════════════════════════════════════╗\n");
+                printf("║           🎉 PIANETA CONQUISTATO DAL PLAYER! 🎉        ║\n");
+                printf("╚════════════════════════════════════════════════════════╝\n");
+            }
+        }
+        else if (risultatoBattaglia == 0)
+        {
+            printf("\n💥 VITTORIA DEL COMPUTER!\n");
+            // Rimuovi nave player
+            if (randomAttaccoPlayerNave == 1 && pianetaA.cacciaPlayer > 0)
+                pianetaA.cacciaPlayer--;
+            else if (randomAttaccoPlayerNave == 2 && pianetaA.intercettatorePlayer > 0)
+                pianetaA.intercettatorePlayer--;
+            else if (randomAttaccoPlayerNave == 3 && pianetaA.bombardierePlayer > 0)
+                pianetaA.bombardierePlayer--;
+
+            if (dominioPianeta >= 0) {
+                contatoreDominio = -1;
+                dominioPianeta = 0;
+            } else {
+                contatoreDominio--;
+            }
+
+            if (contatoreDominio <= -3 && dominioPianeta != -1) {
+                dominioPianeta = -1;
+                printf("\n╔════════════════════════════════════════════════════════╗\n");
+                printf("║           ⚠️  PIANETA CONQUISTATO DAL COMPUTER! ⚠️      ║\n");
+                printf("╚════════════════════════════════════════════════════════╝\n");
+            }
         }
 
-        /*
-           LOGICA DELLA BATTAGLIA
-           - considerazioni carta forbice e sasso
-#CARTA CACCIA
-win rate di carta vs sasso 8 su 10, se sta su sopra 8 perde
-win rate di carta vs forbice 2 su 10 se sta su sopra 2 pered
-win rate di carta vs carta 5 su 10 se sta sopra 5 perde
-#SASSO INTERCETTATOTRE
-win rate di sasso vs forbice 8 su 10, se sta su sopra 8 perde
-win rate di sasso vs carta 2 su 10 se sta su sopra 2 pered
-win rate di sasso vs sasso 5 su 10 se sta sopra 5 perde
-#FORBICE BOMBARDIERE
-win rate di forbice vs carta 8 su 10, se sta su sopra 8 perde
-win rate di forbice vs sasso 2 su 10 se sta su sopra 2 pered
-win rate di forbice vs forbice 5 su 10 se sta sopra 5 perde
+        // Visualizzazione stato del pianeta
+        printf("\n╔════════════════════════════════════════════════════════╗\n");
+        printf("║                   STATO DEL PIANETA                     ║\n");
+        printf("╠════════════════════════════════════════════════════════╣\n");
+        if (dominioPianeta == 0) {
+            printf("║  🌍 STATO: NEUTRALE (Streak: %2d)                        ║\n", contatoreDominio);
+        } else if (dominioPianeta == 1) {
+            printf("║  👑 STATO: CONTROLLATO DAL PLAYER                       ║\n");
+        } else {
+            printf("║  ⚔️  STATO: CONTROLLATO DAL COMPUTER                    ║\n");
+        }
+        printf("╠════════════════════════════════════════════════════════╣\n");
+        printf("║                    NAVI SUL PIANETA                    ║\n");
+        printf("╠════════════════════════════════════════════════════════╣\n");
+        printf("║  PLAYER:                                               ║\n");
+        printf("║    🚀 Caccia: %-3d                                      ║\n", pianetaA.cacciaPlayer);
+        printf("║    🛸 Intercettatori: %-3d                              ║\n", pianetaA.intercettatorePlayer);
+        printf("║    💫 Bombardieri: %-3d                                 ║\n", pianetaA.bombardierePlayer);
+        printf("╠════════════════════════════════════════════════════════╣\n");
+        printf("║  COMPUTER:                                             ║\n");
+        printf("║    🚀 Caccia: %-3d                                      ║\n", pianetaA.cacciaComputer);
+        printf("║    🛸 Intercettatori: %-3d                              ║\n", pianetaA.intercettatoreComputer);
+        printf("║    💫 Bombardieri: %-3d                                 ║\n", pianetaA.bombardiereComputer);
+        printf("╚════════════════════════════════════════════════════════╝\n\n");
 
-carta'caccia' > sasso'intercettatore' > forbice'bombardiere' > (RICOMINCIA) carta...
-
-attaccante sara sempre il player, quindi
-si useranno le truppe di player per attaccare computer, le probabilita sia per attaccante che difensore sara sempre uguale
-cambiera solo tramite il numero di truppe che ci sono
-
-come si svolgera'?
-
-randomNum da 1 a 3
-examp: se esce 2
-2 = intercettatorePLAYER
-attacchera!
-random da 1 a 3
-esce 1
-1 = cacciaComputer
-
-intercettatore avra un 2 su 10 per battere caccia
-perche sasso vs carta e 2 su 10
-
-il ciclo continuera fino a quando o player o computer avranno 0 truppe
-
-da implementare poi chi ha il dominio del pianeta
-
-*/
-
-        // printf("battaglia in corso..\n");
+        sleep(3); // Pausa per leggere i risultati
     }
     pthread_exit(NULL);
 }
@@ -353,12 +526,14 @@ da implementare poi chi ha il dominio del pianeta
 void stampaTipologieDiNavi()
 {
     cleanse();
-    printf("----------------------TIPOLOGIA NAVI-------------------------------\n");
-    printf("'CACCIA' navi che counterano i BOMBARDIERI\n");
-    printf("'INTERCETTATORE' navi che counterano i CACCIA\n");
-    printf("'BOMBARIERE' navi che counterano gli INTERCETTATORI\n");
-    printf("'ESCI' per uscire dal comnado mandaNavi\n");
-    printf("----------------------------------------------------------------\n");
+    printf("╔════════════════════════════════════════════════════════╗\n");
+    printf("║                   TIPOLOGIA NAVI                       ║\n");
+    printf("╠════════════════════════════════════════════════════════╣\n");
+    printf("║  🚀 CACCIA         - Efficace contro Bombardieri      ║\n");
+    printf("║  🛸 INTERCETTATORE - Efficace contro Caccia           ║\n");
+    printf("║  💫 BOMBARDIERE    - Efficace contro Intercettatori   ║\n");
+    printf("║  ❌ ESCI           - Torna al menu principale         ║\n");
+    printf("╚════════════════════════════════════════════════════════╝\n");
 }
 
 void comparazionePianetiInvioNavi(int naviDaMandare, char nomeDelPianeta[50], giocatore *player, pianeta *pianetaA, char comandoMandaNavi[50])
@@ -555,21 +730,28 @@ char *bufferComandi()
 bool risposteComandi(const char *inputUtente)
 {
     cleanse();
-    printf("===========================================\n");
     if (strcmp(inputUtente, arrayComando[0]) == 0)
     {
-        printf("I comandi che hai a disposizione sono:\n");
-        printf("1. 'TUTORIAL' - Vedi le istruzioni di gioco\n");
-        printf("2. 'PRODUCINAVI' - Produci navi\n");
-        printf("3. 'MANDANAVI' - Invia navi ai pianeti\n");
-        printf("4. 'DIFFICOLTA' - Seleziona la difficoltà di gioco\n");
-        printf("5. 'SCAN' - Stampa informazioni sulla partita\n");
-        printf("6. 'EXIT' - Torna alla Lobby Main\n");
-        printf("7. 'USCITATOTALE' - Esci completamente\n");
+        printf("╔════════════════════════════════════════════════════════╗\n");
+        printf("║                    LISTA COMANDI                       ║\n");
+        printf("╠════════════════════════════════════════════════════════╣\n");
+        printf("║  📖 HELP         - Mostra questa lista                ║\n");
+        printf("║  🏭 PRODUCINAVI  - Costruisci nuove navi             ║\n");
+        printf("║  🚀 MANDANAVI    - Invia navi ai pianeti            ║\n");
+        printf("║  ⚙️  DIFFICOLTA   - Modifica la difficoltà           ║\n");
+        printf("║  🔍 SCAN         - Mostra stato della partita       ║\n");
+        printf("║  🔄 EXIT         - Torna alla Lobby                 ║\n");
+        printf("║  ❌ USCITATOTALE - Chiudi il gioco                  ║\n");
+        printf("╚════════════════════════════════════════════════════════╝\n");
+        printf("\nPremi INVIO per continuare...");
+        getchar(); // Consuma il newline precedente
+        getchar(); // Aspetta che l'utente prema INVIO
     }
     else if (strcmp(inputUtente, arrayComando[1]) == 0)
     {
-        printf("Produzione Navi:\n");
+        printf("╔════════════════════════════════════════════════════════╗\n");
+        printf("║                  PRODUZIONE NAVI                       ║\n");
+        printf("╚════════════════════════════════════════════════════════╝\n");
         produciNavi(&player);
     }
     else if (strcmp(inputUtente, arrayComando[2]) == 0)
@@ -615,7 +797,8 @@ bool risposteComandi(const char *inputUtente)
         printf("Fine programma...\n");
         exit(1);
     }
-    printf("===========================================\n");
+    printf("\nScrivi HELP per vedere i comandi disponibili\n");
+    return true;
 }
 
 // inizio programma
