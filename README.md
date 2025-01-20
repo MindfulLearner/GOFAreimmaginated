@@ -1,5 +1,7 @@
  GOFAreimagined
 
+![image](https://github.com/user-attachments/assets/314946dc-1384-4cb7-b06a-dcd9274c44d3)
+
 
 aggiornamento:
 
